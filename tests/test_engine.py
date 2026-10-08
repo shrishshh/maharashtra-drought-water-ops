@@ -4,16 +4,18 @@ Scenario/ward tests read outputs from city/partB_run.py and re-simulate the
 chosen settings; run that script first.
 """
 
+import importlib.util
 import json
-import sys
 from pathlib import Path
 
 import pytest
 import wntr
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "city"))
-import engine  # noqa: E402
+# Load by path under a unique name: city/ and village/ both have an engine.py.
+_spec = importlib.util.spec_from_file_location("city_engine", REPO / "city" / "engine.py")
+engine = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(engine)
 
 RESULTS = REPO / "outputs" / "partB_results.json"
 WARDS = REPO / "outputs" / "wards.json"

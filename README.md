@@ -33,6 +33,20 @@ Wards (KMeans, 6 wards) and leaks are simulated on the sample network. Writes
 `outputs/wards.json`, `outputs/partB_results.json`, `outputs/partB_compare.png`,
 `outputs/partB_leaks.png`.
 
+## Part C - Village tanker planner (Tuljapur taluka, Dharashiv)
+
+```powershell
+.\.venv\Scripts\python.exe village\data_prep.py      # builds data/village/villages.json (--refresh re-downloads)
+.\.venv\Scripts\python.exe village\partC_run.py      # ~40 s (30 s OR-Tools time limit)
+```
+
+Real: village locations (OpenStreetMap, ODbL) and Census 2011 village population
+(via census2011.co.in, fuzzy name match). SIMULATED: livestock, source status, tanker
+history, request dates, GPS traces and trip claims. The filling point (Tuljapur town)
+is an assumption. `village/engine.py` holds the JSON-in/JSON-out functions: need
+score, pluggable distance matrix (Amazon Location stub for Part D), OR-Tools routing,
+naive FCFS baseline, and rule-based fraud checks.
+
 ## AI tools used
 
 - Claude Code (Anthropic) - code generation, debugging, and documentation.
