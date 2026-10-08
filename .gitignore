@@ -1,0 +1,24 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets - never commit
+.env
+.env.*
+*.pem
+.aws/
+
+# Generated outputs / caches (keep summary csv + png)
+outputs/cache/
+outputs/**/*.bin
+outputs/**/*.rpt
+outputs/**/*.out
+*.rpt
+*.bin
+temp.inp
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
