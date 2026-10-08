@@ -1,0 +1,3916 @@
+{
+  "label": "Tuljapur taluka, Dharashiv - real village locations (OSM) + Census 2011 population; livestock / requests / trips / GPS SIMULATED",
+  "data_sources": {
+    "village_locations": "OpenStreetMap via Overpass API, place=village in OSM relation 10349973 (Tuljapur taluka). (c) OpenStreetMap contributors, ODbL.",
+    "population": "Census 2011 village totals, Tuljapur sub-district 04241 (Osmanabad district), via https://www.census2011.co.in/data/subdistrict/4241-tuljapur-osmanabad-maharashtra.html",
+    "fill_point": "OSM place=town 'Tuljapur' (taluka HQ) - ASSUMED filling point, not confirmed"
+  },
+  "simulated_fields": [
+    "large_animals_sim",
+    "small_animals_sim",
+    "source_dry_sim",
+    "days_since_last_tanker_sim",
+    "request_date_sim"
+  ],
+  "census_match": {
+    "osm_villages": 114,
+    "census_villages": 123,
+    "matched": 97,
+    "match_rate": 0.851,
+    "threshold": 0.8,
+    "demo_uses_threshold": 0.9,
+    "unmatched_osm_names": [
+      "Horti",
+      "Dhakta Tuljapur",
+      "Omerga",
+      "Laxmi Nagar Tanda",
+      "Vasantnagar",
+      "Borman Tanda",
+      "Narkhori Tanda",
+      "Chinchkori Tanda",
+      "Wadar wasti",
+      "Markhel Tanda",
+      "Hipparga Rava",
+      "Undergaon",
+      "Zopadpatti",
+      "Mahar Sangvi",
+      "Salgara Maddi",
+      "Jakhani Tanda",
+      "Khotachiwadi"
+    ]
+  },
+  "config": {
+    "human_lpcd": 20,
+    "large_animal_lpd": 35,
+    "small_animal_lpd": 10,
+    "urgency_source_dry": 1.5,
+    "urgency_per_day_waiting": 0.05,
+    "urgency_days_cap": 10,
+    "n_tankers": 6,
+    "tanker_capacity_l": 10000,
+    "max_hours": 10,
+    "fill_min": 20,
+    "unload_min": 20,
+    "shift_start": "07:00",
+    "distance_provider": "haversine",
+    "detour_factor": 1.3,
+    "speed_kmh": 30,
+    "solver_time_limit_s": 30,
+    "max_trips_per_tanker": 10,
+    "penalty_scale": 100,
+    "penalty_decay": 0.6,
+    "penalty_floor": 0.1,
+    "refill_arc_cost_m": 200,
+    "high_need_quantile": 0.75,
+    "gps_interval_min": 1,
+    "gps_noise_m": 10,
+    "visit_radius_m": 300,
+    "claim_window_min": 60,
+    "min_dwell_frac": 0.75,
+    "fill_dwell_frac": 0.5,
+    "max_plausible_kmh": 60
+  },
+  "need": {
+    "total_need_l": 2132045,
+    "total_loads_needed": 229,
+    "ranked": [
+      {
+        "id": "V09",
+        "name": "Jalkot",
+        "population": 7971,
+        "daily_need_l": 283390,
+        "urgency": 1.575,
+        "need_score": 446339.3,
+        "loads_needed": 29,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 1,
+        "request_date_sim": "2026-10-06",
+        "rank": 1,
+        "high_need": true
+      },
+      {
+        "id": "V04",
+        "name": "Kati",
+        "population": 6875,
+        "daily_need_l": 201625,
+        "urgency": 1.45,
+        "need_score": 292356.2,
+        "loads_needed": 21,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 9,
+        "request_date_sim": "2026-10-02",
+        "rank": 2,
+        "high_need": true
+      },
+      {
+        "id": "V06",
+        "name": "Apsinga",
+        "population": 4541,
+        "daily_need_l": 139305,
+        "urgency": 1.8,
+        "need_score": 250749.0,
+        "loads_needed": 14,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-08",
+        "rank": 3,
+        "high_need": true
+      },
+      {
+        "id": "V02",
+        "name": "Sindphal",
+        "population": 4617,
+        "daily_need_l": 145405,
+        "urgency": 1.5,
+        "need_score": 218107.5,
+        "loads_needed": 15,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 12,
+        "request_date_sim": "2026-10-08",
+        "rank": 4,
+        "high_need": true
+      },
+      {
+        "id": "V28",
+        "name": "Shahapur",
+        "population": 2903,
+        "daily_need_l": 92040,
+        "urgency": 2.1,
+        "need_score": 193284.0,
+        "loads_needed": 10,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 8,
+        "request_date_sim": "2026-10-08",
+        "rank": 5,
+        "high_need": true
+      },
+      {
+        "id": "V27",
+        "name": "Nilegaon",
+        "population": 2510,
+        "daily_need_l": 84845,
+        "urgency": 2.1,
+        "need_score": 178174.5,
+        "loads_needed": 9,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 8,
+        "request_date_sim": "2026-10-02",
+        "rank": 6,
+        "high_need": true
+      },
+      {
+        "id": "V13",
+        "name": "Horti",
+        "population": 3339,
+        "daily_need_l": 100965,
+        "urgency": 1.725,
+        "need_score": 174164.6,
+        "loads_needed": 11,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 3,
+        "request_date_sim": "2026-10-08",
+        "rank": 7,
+        "high_need": true
+      },
+      {
+        "id": "V03",
+        "name": "Itkal",
+        "population": 2376,
+        "daily_need_l": 76175,
+        "urgency": 1.8,
+        "need_score": 137115.0,
+        "loads_needed": 8,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-07",
+        "rank": 8,
+        "high_need": true
+      },
+      {
+        "id": "V07",
+        "name": "Murta",
+        "population": 2062,
+        "daily_need_l": 65025,
+        "urgency": 2.1,
+        "need_score": 136552.5,
+        "loads_needed": 7,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 8,
+        "request_date_sim": "2026-10-08",
+        "rank": 9,
+        "high_need": false
+      },
+      {
+        "id": "V01",
+        "name": "Suratgaon",
+        "population": 1579,
+        "daily_need_l": 53145,
+        "urgency": 2.25,
+        "need_score": 119576.2,
+        "loads_needed": 6,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 11,
+        "request_date_sim": "2026-10-04",
+        "rank": 10,
+        "high_need": false
+      },
+      {
+        "id": "V17",
+        "name": "Khandala",
+        "population": 1486,
+        "daily_need_l": 48775,
+        "urgency": 2.1,
+        "need_score": 102427.5,
+        "loads_needed": 5,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 8,
+        "request_date_sim": "2026-10-01",
+        "rank": 11,
+        "high_need": false
+      },
+      {
+        "id": "V25",
+        "name": "Lohgaon",
+        "population": 2134,
+        "daily_need_l": 66660,
+        "urgency": 1.5,
+        "need_score": 99990.0,
+        "loads_needed": 7,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 10,
+        "request_date_sim": "2026-09-29",
+        "rank": 12,
+        "high_need": false
+      },
+      {
+        "id": "V12",
+        "name": "Chincholi",
+        "population": 1459,
+        "daily_need_l": 44090,
+        "urgency": 2.1,
+        "need_score": 92589.0,
+        "loads_needed": 5,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 8,
+        "request_date_sim": "2026-10-08",
+        "rank": 13,
+        "high_need": false
+      },
+      {
+        "id": "V05",
+        "name": "Barul",
+        "population": 2482,
+        "daily_need_l": 81935,
+        "urgency": 1.1,
+        "need_score": 90128.5,
+        "loads_needed": 9,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 2,
+        "request_date_sim": "2026-10-08",
+        "rank": 14,
+        "high_need": false
+      },
+      {
+        "id": "V15",
+        "name": "Karla",
+        "population": 1875,
+        "daily_need_l": 61635,
+        "urgency": 1.35,
+        "need_score": 83207.2,
+        "loads_needed": 7,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 7,
+        "request_date_sim": "2026-10-07",
+        "rank": 15,
+        "high_need": false
+      },
+      {
+        "id": "V26",
+        "name": "Dahitna",
+        "population": 1067,
+        "daily_need_l": 36415,
+        "urgency": 2.175,
+        "need_score": 79202.6,
+        "loads_needed": 4,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 9,
+        "request_date_sim": "2026-10-04",
+        "rank": 16,
+        "high_need": false
+      },
+      {
+        "id": "V23",
+        "name": "Katri",
+        "population": 1170,
+        "daily_need_l": 39210,
+        "urgency": 1.95,
+        "need_score": 76459.5,
+        "loads_needed": 4,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 6,
+        "request_date_sim": "2026-10-01",
+        "rank": 17,
+        "high_need": false
+      },
+      {
+        "id": "V20",
+        "name": "Bijanwadi",
+        "population": 1411,
+        "daily_need_l": 44605,
+        "urgency": 1.5,
+        "need_score": 66907.5,
+        "loads_needed": 5,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 11,
+        "request_date_sim": "2026-10-02",
+        "rank": 18,
+        "high_need": false
+      },
+      {
+        "id": "V32",
+        "name": "Sarati",
+        "population": 1262,
+        "daily_need_l": 41715,
+        "urgency": 1.575,
+        "need_score": 65701.1,
+        "loads_needed": 5,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 1,
+        "request_date_sim": "2026-10-02",
+        "rank": 19,
+        "high_need": false
+      },
+      {
+        "id": "V08",
+        "name": "Aliyabad",
+        "population": 898,
+        "daily_need_l": 27720,
+        "urgency": 2.25,
+        "need_score": 62370.0,
+        "loads_needed": 3,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 10,
+        "request_date_sim": "2026-10-05",
+        "rank": 20,
+        "high_need": false
+      },
+      {
+        "id": "V11",
+        "name": "Gondhalwadi",
+        "population": 1354,
+        "daily_need_l": 46785,
+        "urgency": 1.25,
+        "need_score": 58481.2,
+        "loads_needed": 5,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 5,
+        "request_date_sim": "2026-09-29",
+        "rank": 21,
+        "high_need": false
+      },
+      {
+        "id": "V19",
+        "name": "Tirth Bk",
+        "population": 1470,
+        "daily_need_l": 46780,
+        "urgency": 1.25,
+        "need_score": 58475.0,
+        "loads_needed": 5,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 5,
+        "request_date_sim": "2026-10-03",
+        "rank": 22,
+        "high_need": false
+      },
+      {
+        "id": "V10",
+        "name": "Nanduri",
+        "population": 1506,
+        "daily_need_l": 48660,
+        "urgency": 1.2,
+        "need_score": 58392.0,
+        "loads_needed": 5,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-02",
+        "rank": 23,
+        "high_need": false
+      },
+      {
+        "id": "V14",
+        "name": "Wanegaon",
+        "population": 1299,
+        "daily_need_l": 36560,
+        "urgency": 1.575,
+        "need_score": 57582.0,
+        "loads_needed": 4,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 1,
+        "request_date_sim": "2026-10-03",
+        "rank": 24,
+        "high_need": false
+      },
+      {
+        "id": "V30",
+        "name": "Indira Nagar",
+        "population": 1403,
+        "daily_need_l": 38955,
+        "urgency": 1.2,
+        "need_score": 46746.0,
+        "loads_needed": 4,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-05",
+        "rank": 25,
+        "high_need": false
+      },
+      {
+        "id": "V24",
+        "name": "Borgaon",
+        "population": 1343,
+        "daily_need_l": 38690,
+        "urgency": 1.2,
+        "need_score": 46428.0,
+        "loads_needed": 4,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-06",
+        "rank": 26,
+        "high_need": false
+      },
+      {
+        "id": "V21",
+        "name": "Sardewadi",
+        "population": 806,
+        "daily_need_l": 25255,
+        "urgency": 1.8,
+        "need_score": 45459.0,
+        "loads_needed": 3,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-05",
+        "rank": 27,
+        "high_need": false
+      },
+      {
+        "id": "V29",
+        "name": "Gujnur",
+        "population": 677,
+        "daily_need_l": 22780,
+        "urgency": 1.8,
+        "need_score": 41004.0,
+        "loads_needed": 3,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-02",
+        "rank": 28,
+        "high_need": false
+      },
+      {
+        "id": "V16",
+        "name": "Honala",
+        "population": 925,
+        "daily_need_l": 32565,
+        "urgency": 1.1,
+        "need_score": 35821.5,
+        "loads_needed": 4,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 2,
+        "request_date_sim": "2026-10-08",
+        "rank": 29,
+        "high_need": false
+      },
+      {
+        "id": "V18",
+        "name": "Raikhel",
+        "population": 749,
+        "daily_need_l": 24220,
+        "urgency": 1.35,
+        "need_score": 32697.0,
+        "loads_needed": 3,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 7,
+        "request_date_sim": "2026-10-07",
+        "rank": 30,
+        "high_need": false
+      },
+      {
+        "id": "V31",
+        "name": "Ramtirth",
+        "population": 799,
+        "daily_need_l": 24805,
+        "urgency": 1.2,
+        "need_score": 29766.0,
+        "loads_needed": 3,
+        "source_dry_sim": false,
+        "days_since_last_tanker_sim": 4,
+        "request_date_sim": "2026-10-07",
+        "rank": 31,
+        "high_need": false
+      },
+      {
+        "id": "V22",
+        "name": "Kuttewadi",
+        "population": 397,
+        "daily_need_l": 11310,
+        "urgency": 1.5,
+        "need_score": 16965.0,
+        "loads_needed": 2,
+        "source_dry_sim": true,
+        "days_since_last_tanker_sim": 0,
+        "request_date_sim": "2026-09-29",
+        "rank": 32,
+        "high_need": false
+      }
+    ]
+  },
+  "comparison": [
+    {
+      "plan": "naive (first come, first served)",
+      "total_km": 1190.5,
+      "tanker_hours": 55.33,
+      "litres_delivered": 212740,
+      "trips": 23,
+      "villages_served": 5,
+      "high_need_villages": 8,
+      "high_need_unserved": 8,
+      "litres_to_high_need": 0,
+      "need_covered_pct": 10.0,
+      "litres_per_km": 178.7
+    },
+    {
+      "plan": "optimised (OR-Tools)",
+      "total_km": 1260.9,
+      "tanker_hours": 57.7,
+      "litres_delivered": 230000,
+      "trips": 23,
+      "villages_served": 12,
+      "high_need_villages": 8,
+      "high_need_unserved": 0,
+      "litres_to_high_need": 190000,
+      "need_covered_pct": 10.8,
+      "litres_per_km": 182.4
+    }
+  ],
+  "plans": {
+    "naive": {
+      "plan": "naive (first come, first served)",
+      "routes": [
+        {
+          "tanker": "T1",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 11,
+              "village_id": "V11",
+              "place": "Gondhalwadi",
+              "unit_id": "V11-1",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 53,
+              "depart_min": 73
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 106,
+              "depart_min": 126
+            },
+            {
+              "type": "deliver",
+              "loc": 22,
+              "village_id": "V22",
+              "place": "Kuttewadi",
+              "unit_id": "V22-2",
+              "litres": 1310,
+              "trip": 2,
+              "arrive_min": 184,
+              "depart_min": 204
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 262,
+              "depart_min": 282
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-6",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 378,
+              "depart_min": 398
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 494,
+              "depart_min": 514
+            },
+            {
+              "type": "deliver",
+              "loc": 23,
+              "village_id": "V23",
+              "place": "Katri",
+              "unit_id": "V23-4",
+              "litres": 9210,
+              "trip": 4,
+              "arrive_min": 537,
+              "depart_min": 557
+            }
+          ],
+          "trips": 4,
+          "km": 208.38,
+          "hours": 9.667,
+          "end_min": 580,
+          "litres": 30520
+        },
+        {
+          "tanker": "T2",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 11,
+              "village_id": "V11",
+              "place": "Gondhalwadi",
+              "unit_id": "V11-2",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 53,
+              "depart_min": 73
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 106,
+              "depart_min": 126
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-1",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 222,
+              "depart_min": 242
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 338,
+              "depart_min": 358
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-7",
+              "litres": 6660,
+              "trip": 3,
+              "arrive_min": 454,
+              "depart_min": 474
+            }
+          ],
+          "trips": 3,
+          "km": 224.3,
+          "hours": 9.5,
+          "end_min": 570,
+          "litres": 26660
+        },
+        {
+          "tanker": "T3",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 11,
+              "village_id": "V11",
+              "place": "Gondhalwadi",
+              "unit_id": "V11-3",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 53,
+              "depart_min": 73
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 106,
+              "depart_min": 126
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-2",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 222,
+              "depart_min": 242
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 338,
+              "depart_min": 358
+            },
+            {
+              "type": "deliver",
+              "loc": 17,
+              "village_id": "V17",
+              "place": "Khandala",
+              "unit_id": "V17-1",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 389,
+              "depart_min": 409
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 440,
+              "depart_min": 460
+            },
+            {
+              "type": "deliver",
+              "loc": 17,
+              "village_id": "V17",
+              "place": "Khandala",
+              "unit_id": "V17-5",
+              "litres": 8775,
+              "trip": 4,
+              "arrive_min": 491,
+              "depart_min": 511
+            }
+          ],
+          "trips": 4,
+          "km": 189.14,
+          "hours": 9.033,
+          "end_min": 542,
+          "litres": 38775
+        },
+        {
+          "tanker": "T4",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 11,
+              "village_id": "V11",
+              "place": "Gondhalwadi",
+              "unit_id": "V11-4",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 53,
+              "depart_min": 73
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 106,
+              "depart_min": 126
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-3",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 222,
+              "depart_min": 242
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 338,
+              "depart_min": 358
+            },
+            {
+              "type": "deliver",
+              "loc": 17,
+              "village_id": "V17",
+              "place": "Khandala",
+              "unit_id": "V17-2",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 389,
+              "depart_min": 409
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 440,
+              "depart_min": 460
+            },
+            {
+              "type": "deliver",
+              "loc": 23,
+              "village_id": "V23",
+              "place": "Katri",
+              "unit_id": "V23-1",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 483,
+              "depart_min": 503
+            }
+          ],
+          "trips": 4,
+          "km": 181.52,
+          "hours": 8.767,
+          "end_min": 526,
+          "litres": 40000
+        },
+        {
+          "tanker": "T5",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 11,
+              "village_id": "V11",
+              "place": "Gondhalwadi",
+              "unit_id": "V11-5",
+              "litres": 6785,
+              "trip": 1,
+              "arrive_min": 53,
+              "depart_min": 73
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 106,
+              "depart_min": 126
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-4",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 222,
+              "depart_min": 242
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 338,
+              "depart_min": 358
+            },
+            {
+              "type": "deliver",
+              "loc": 17,
+              "village_id": "V17",
+              "place": "Khandala",
+              "unit_id": "V17-3",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 389,
+              "depart_min": 409
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 440,
+              "depart_min": 460
+            },
+            {
+              "type": "deliver",
+              "loc": 23,
+              "village_id": "V23",
+              "place": "Katri",
+              "unit_id": "V23-2",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 483,
+              "depart_min": 503
+            }
+          ],
+          "trips": 4,
+          "km": 181.52,
+          "hours": 8.767,
+          "end_min": 526,
+          "litres": 36785
+        },
+        {
+          "tanker": "T6",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 22,
+              "village_id": "V22",
+              "place": "Kuttewadi",
+              "unit_id": "V22-1",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 78,
+              "depart_min": 98
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 156,
+              "depart_min": 176
+            },
+            {
+              "type": "deliver",
+              "loc": 25,
+              "village_id": "V25",
+              "place": "Lohgaon",
+              "unit_id": "V25-5",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 272,
+              "depart_min": 292
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 388,
+              "depart_min": 408
+            },
+            {
+              "type": "deliver",
+              "loc": 17,
+              "village_id": "V17",
+              "place": "Khandala",
+              "unit_id": "V17-4",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 439,
+              "depart_min": 459
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 490,
+              "depart_min": 510
+            },
+            {
+              "type": "deliver",
+              "loc": 23,
+              "village_id": "V23",
+              "place": "Katri",
+              "unit_id": "V23-3",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 533,
+              "depart_min": 553
+            }
+          ],
+          "trips": 4,
+          "km": 205.68,
+          "hours": 9.6,
+          "end_min": 576,
+          "litres": 40000
+        }
+      ],
+      "runtime_s": 0.0,
+      "litres_by_village": {
+        "V11": 46785,
+        "V22": 11310,
+        "V25": 66660,
+        "V23": 39210,
+        "V17": 48775
+      },
+      "dropped_units": [
+        {
+          "unit_id": "V04-1",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-2",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-3",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-4",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-5",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-6",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-7",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-8",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-9",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-10",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-11",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-12",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-13",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-14",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-15",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-16",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-17",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-18",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-19",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-20",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-21",
+          "village_id": "V04",
+          "litres": 1625
+        },
+        {
+          "unit_id": "V10-1",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-2",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-3",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-4",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-5",
+          "village_id": "V10",
+          "litres": 8660
+        },
+        {
+          "unit_id": "V20-1",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-2",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-3",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-4",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-5",
+          "village_id": "V20",
+          "litres": 4605
+        },
+        {
+          "unit_id": "V27-1",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-2",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-3",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-4",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-5",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-6",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-7",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-8",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-9",
+          "village_id": "V27",
+          "litres": 4845
+        },
+        {
+          "unit_id": "V29-1",
+          "village_id": "V29",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V29-2",
+          "village_id": "V29",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V29-3",
+          "village_id": "V29",
+          "litres": 2780
+        },
+        {
+          "unit_id": "V32-1",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-2",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-3",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-4",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-5",
+          "village_id": "V32",
+          "litres": 1715
+        },
+        {
+          "unit_id": "V14-1",
+          "village_id": "V14",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V14-2",
+          "village_id": "V14",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V14-3",
+          "village_id": "V14",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V14-4",
+          "village_id": "V14",
+          "litres": 6560
+        },
+        {
+          "unit_id": "V19-1",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-2",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-3",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-4",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-5",
+          "village_id": "V19",
+          "litres": 6780
+        },
+        {
+          "unit_id": "V01-1",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-2",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-3",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-4",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-5",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-6",
+          "village_id": "V01",
+          "litres": 3145
+        },
+        {
+          "unit_id": "V26-1",
+          "village_id": "V26",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V26-2",
+          "village_id": "V26",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V26-3",
+          "village_id": "V26",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V26-4",
+          "village_id": "V26",
+          "litres": 6415
+        },
+        {
+          "unit_id": "V08-1",
+          "village_id": "V08",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V08-2",
+          "village_id": "V08",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V08-3",
+          "village_id": "V08",
+          "litres": 7720
+        },
+        {
+          "unit_id": "V21-1",
+          "village_id": "V21",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V21-2",
+          "village_id": "V21",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V21-3",
+          "village_id": "V21",
+          "litres": 5255
+        },
+        {
+          "unit_id": "V30-1",
+          "village_id": "V30",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V30-2",
+          "village_id": "V30",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V30-3",
+          "village_id": "V30",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V30-4",
+          "village_id": "V30",
+          "litres": 8955
+        },
+        {
+          "unit_id": "V09-1",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-2",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-3",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-4",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-5",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-6",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-7",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-8",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-9",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-10",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-11",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-12",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-13",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-14",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-15",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-16",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-17",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-18",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-19",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-20",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-21",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-22",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-23",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-24",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-25",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-26",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-27",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-28",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-29",
+          "village_id": "V09",
+          "litres": 3390
+        },
+        {
+          "unit_id": "V24-1",
+          "village_id": "V24",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V24-2",
+          "village_id": "V24",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V24-3",
+          "village_id": "V24",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V24-4",
+          "village_id": "V24",
+          "litres": 8690
+        },
+        {
+          "unit_id": "V03-1",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-2",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-3",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-4",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-5",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-6",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-7",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-8",
+          "village_id": "V03",
+          "litres": 6175
+        },
+        {
+          "unit_id": "V15-1",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-2",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-3",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-4",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-5",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-6",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-7",
+          "village_id": "V15",
+          "litres": 1635
+        },
+        {
+          "unit_id": "V18-1",
+          "village_id": "V18",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V18-2",
+          "village_id": "V18",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V18-3",
+          "village_id": "V18",
+          "litres": 4220
+        },
+        {
+          "unit_id": "V31-1",
+          "village_id": "V31",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V31-2",
+          "village_id": "V31",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V31-3",
+          "village_id": "V31",
+          "litres": 4805
+        },
+        {
+          "unit_id": "V02-1",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-2",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-3",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-4",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-5",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-6",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-7",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-8",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-9",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-10",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-11",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-12",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-13",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-14",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-15",
+          "village_id": "V02",
+          "litres": 5405
+        },
+        {
+          "unit_id": "V05-1",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-2",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-3",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-4",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-5",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-6",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-7",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-8",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-9",
+          "village_id": "V05",
+          "litres": 1935
+        },
+        {
+          "unit_id": "V06-1",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-2",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-3",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-4",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-5",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-6",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-7",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-8",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-9",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-10",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-11",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-12",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-13",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-14",
+          "village_id": "V06",
+          "litres": 9305
+        },
+        {
+          "unit_id": "V07-1",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-2",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-3",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-4",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-5",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-6",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-7",
+          "village_id": "V07",
+          "litres": 5025
+        },
+        {
+          "unit_id": "V12-1",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-2",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-3",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-4",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-5",
+          "village_id": "V12",
+          "litres": 4090
+        },
+        {
+          "unit_id": "V13-1",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-2",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-3",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-4",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-5",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-6",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-7",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-8",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-9",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-10",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-11",
+          "village_id": "V13",
+          "litres": 965
+        },
+        {
+          "unit_id": "V16-1",
+          "village_id": "V16",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V16-2",
+          "village_id": "V16",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V16-3",
+          "village_id": "V16",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V16-4",
+          "village_id": "V16",
+          "litres": 2565
+        },
+        {
+          "unit_id": "V28-1",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-2",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-3",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-4",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-5",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-6",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-7",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-8",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-9",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-10",
+          "village_id": "V28",
+          "litres": 2040
+        }
+      ]
+    },
+    "optimised": {
+      "plan": "optimised (OR-Tools)",
+      "routes": [
+        {
+          "tanker": "T1",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 4,
+              "village_id": "V04",
+              "place": "Kati",
+              "unit_id": "V04-2",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 72,
+              "depart_min": 92
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 144,
+              "depart_min": 164
+            },
+            {
+              "type": "deliver",
+              "loc": 27,
+              "village_id": "V27",
+              "place": "Nilegaon",
+              "unit_id": "V27-1",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 258,
+              "depart_min": 278
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 372,
+              "depart_min": 392
+            },
+            {
+              "type": "deliver",
+              "loc": 9,
+              "village_id": "V09",
+              "place": "Jalkot",
+              "unit_id": "V09-1",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 482,
+              "depart_min": 502
+            }
+          ],
+          "trips": 3,
+          "km": 234.8,
+          "hours": 9.867,
+          "end_min": 592,
+          "litres": 30000
+        },
+        {
+          "tanker": "T2",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 4,
+              "village_id": "V04",
+              "place": "Kati",
+              "unit_id": "V04-1",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 72,
+              "depart_min": 92
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 144,
+              "depart_min": 164
+            },
+            {
+              "type": "deliver",
+              "loc": 3,
+              "village_id": "V03",
+              "place": "Itkal",
+              "unit_id": "V03-1",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 237,
+              "depart_min": 257
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 330,
+              "depart_min": 350
+            },
+            {
+              "type": "deliver",
+              "loc": 9,
+              "village_id": "V09",
+              "place": "Jalkot",
+              "unit_id": "V09-3",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 440,
+              "depart_min": 460
+            }
+          ],
+          "trips": 3,
+          "km": 213.21,
+          "hours": 9.167,
+          "end_min": 550,
+          "litres": 30000
+        },
+        {
+          "tanker": "T3",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 9,
+              "village_id": "V09",
+              "place": "Jalkot",
+              "unit_id": "V09-2",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 110,
+              "depart_min": 130
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 220,
+              "depart_min": 240
+            },
+            {
+              "type": "deliver",
+              "loc": 2,
+              "village_id": "V02",
+              "place": "Sindphal",
+              "unit_id": "V02-3",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 248,
+              "depart_min": 268
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 276,
+              "depart_min": 296
+            },
+            {
+              "type": "deliver",
+              "loc": 2,
+              "village_id": "V02",
+              "place": "Sindphal",
+              "unit_id": "V02-2",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 304,
+              "depart_min": 324
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 332,
+              "depart_min": 352
+            },
+            {
+              "type": "deliver",
+              "loc": 6,
+              "village_id": "V06",
+              "place": "Apsinga",
+              "unit_id": "V06-2",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 369,
+              "depart_min": 389
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 406,
+              "depart_min": 426
+            },
+            {
+              "type": "deliver",
+              "loc": 13,
+              "village_id": "V13",
+              "place": "Horti",
+              "unit_id": "V13-1",
+              "litres": 10000,
+              "trip": 5,
+              "arrive_min": 500,
+              "depart_min": 520
+            }
+          ],
+          "trips": 5,
+          "km": 195.31,
+          "hours": 9.9,
+          "end_min": 594,
+          "litres": 50000
+        },
+        {
+          "tanker": "T4",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 6,
+              "village_id": "V06",
+              "place": "Apsinga",
+              "unit_id": "V06-1",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 37,
+              "depart_min": 57
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 74,
+              "depart_min": 94
+            },
+            {
+              "type": "deliver",
+              "loc": 4,
+              "village_id": "V04",
+              "place": "Kati",
+              "unit_id": "V04-3",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 146,
+              "depart_min": 166
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 218,
+              "depart_min": 238
+            },
+            {
+              "type": "deliver",
+              "loc": 1,
+              "village_id": "V01",
+              "place": "Suratgaon",
+              "unit_id": "V01-1",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 282,
+              "depart_min": 302
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 346,
+              "depart_min": 366
+            },
+            {
+              "type": "deliver",
+              "loc": 7,
+              "village_id": "V07",
+              "place": "Murta",
+              "unit_id": "V07-1",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 447,
+              "depart_min": 467
+            }
+          ],
+          "trips": 4,
+          "km": 191.79,
+          "hours": 9.133,
+          "end_min": 548,
+          "litres": 40000
+        },
+        {
+          "tanker": "T5",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 2,
+              "village_id": "V02",
+              "place": "Sindphal",
+              "unit_id": "V02-1",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 28,
+              "depart_min": 48
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 56,
+              "depart_min": 76
+            },
+            {
+              "type": "deliver",
+              "loc": 6,
+              "village_id": "V06",
+              "place": "Apsinga",
+              "unit_id": "V06-3",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 93,
+              "depart_min": 113
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 130,
+              "depart_min": 150
+            },
+            {
+              "type": "deliver",
+              "loc": 27,
+              "village_id": "V27",
+              "place": "Nilegaon",
+              "unit_id": "V27-2",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 244,
+              "depart_min": 264
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 358,
+              "depart_min": 378
+            },
+            {
+              "type": "deliver",
+              "loc": 28,
+              "village_id": "V28",
+              "place": "Shahapur",
+              "unit_id": "V28-2",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 469,
+              "depart_min": 489
+            }
+          ],
+          "trips": 4,
+          "km": 208.68,
+          "hours": 9.667,
+          "end_min": 580,
+          "litres": 40000
+        },
+        {
+          "tanker": "T6",
+          "events": [
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 0,
+              "depart_min": 20
+            },
+            {
+              "type": "deliver",
+              "loc": 28,
+              "village_id": "V28",
+              "place": "Shahapur",
+              "unit_id": "V28-1",
+              "litres": 10000,
+              "trip": 1,
+              "arrive_min": 111,
+              "depart_min": 131
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 222,
+              "depart_min": 242
+            },
+            {
+              "type": "deliver",
+              "loc": 23,
+              "village_id": "V23",
+              "place": "Katri",
+              "unit_id": "V23-1",
+              "litres": 10000,
+              "trip": 2,
+              "arrive_min": 265,
+              "depart_min": 285
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 308,
+              "depart_min": 328
+            },
+            {
+              "type": "deliver",
+              "loc": 17,
+              "village_id": "V17",
+              "place": "Khandala",
+              "unit_id": "V17-1",
+              "litres": 10000,
+              "trip": 3,
+              "arrive_min": 359,
+              "depart_min": 379
+            },
+            {
+              "type": "fill",
+              "loc": 0,
+              "place": "Tuljapur",
+              "arrive_min": 410,
+              "depart_min": 430
+            },
+            {
+              "type": "deliver",
+              "loc": 13,
+              "village_id": "V13",
+              "place": "Horti",
+              "unit_id": "V13-2",
+              "litres": 10000,
+              "trip": 4,
+              "arrive_min": 504,
+              "depart_min": 524
+            }
+          ],
+          "trips": 4,
+          "km": 217.13,
+          "hours": 9.967,
+          "end_min": 598,
+          "litres": 40000
+        }
+      ],
+      "runtime_s": 30.01,
+      "litres_by_village": {
+        "V04": 30000,
+        "V27": 20000,
+        "V09": 30000,
+        "V03": 10000,
+        "V02": 30000,
+        "V06": 30000,
+        "V13": 20000,
+        "V01": 10000,
+        "V07": 10000,
+        "V28": 20000,
+        "V23": 10000,
+        "V17": 10000
+      },
+      "dropped_units": [
+        {
+          "unit_id": "V09-4",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-5",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-6",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-7",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-8",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-9",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-10",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-11",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-12",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-13",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-14",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-15",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-16",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-17",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-18",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-19",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-20",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-21",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-22",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-23",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-24",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-25",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-26",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-27",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-28",
+          "village_id": "V09",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V09-29",
+          "village_id": "V09",
+          "litres": 3390
+        },
+        {
+          "unit_id": "V04-4",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-5",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-6",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-7",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-8",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-9",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-10",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-11",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-12",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-13",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-14",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-15",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-16",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-17",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-18",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-19",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-20",
+          "village_id": "V04",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V04-21",
+          "village_id": "V04",
+          "litres": 1625
+        },
+        {
+          "unit_id": "V06-4",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-5",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-6",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-7",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-8",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-9",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-10",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-11",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-12",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-13",
+          "village_id": "V06",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V06-14",
+          "village_id": "V06",
+          "litres": 9305
+        },
+        {
+          "unit_id": "V02-4",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-5",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-6",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-7",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-8",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-9",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-10",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-11",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-12",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-13",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-14",
+          "village_id": "V02",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V02-15",
+          "village_id": "V02",
+          "litres": 5405
+        },
+        {
+          "unit_id": "V28-3",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-4",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-5",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-6",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-7",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-8",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-9",
+          "village_id": "V28",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V28-10",
+          "village_id": "V28",
+          "litres": 2040
+        },
+        {
+          "unit_id": "V27-3",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-4",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-5",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-6",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-7",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-8",
+          "village_id": "V27",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V27-9",
+          "village_id": "V27",
+          "litres": 4845
+        },
+        {
+          "unit_id": "V13-3",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-4",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-5",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-6",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-7",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-8",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-9",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-10",
+          "village_id": "V13",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V13-11",
+          "village_id": "V13",
+          "litres": 965
+        },
+        {
+          "unit_id": "V03-2",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-3",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-4",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-5",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-6",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-7",
+          "village_id": "V03",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V03-8",
+          "village_id": "V03",
+          "litres": 6175
+        },
+        {
+          "unit_id": "V07-2",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-3",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-4",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-5",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-6",
+          "village_id": "V07",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V07-7",
+          "village_id": "V07",
+          "litres": 5025
+        },
+        {
+          "unit_id": "V01-2",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-3",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-4",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-5",
+          "village_id": "V01",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V01-6",
+          "village_id": "V01",
+          "litres": 3145
+        },
+        {
+          "unit_id": "V17-2",
+          "village_id": "V17",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V17-3",
+          "village_id": "V17",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V17-4",
+          "village_id": "V17",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V17-5",
+          "village_id": "V17",
+          "litres": 8775
+        },
+        {
+          "unit_id": "V25-1",
+          "village_id": "V25",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V25-2",
+          "village_id": "V25",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V25-3",
+          "village_id": "V25",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V25-4",
+          "village_id": "V25",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V25-5",
+          "village_id": "V25",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V25-6",
+          "village_id": "V25",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V25-7",
+          "village_id": "V25",
+          "litres": 6660
+        },
+        {
+          "unit_id": "V12-1",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-2",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-3",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-4",
+          "village_id": "V12",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V12-5",
+          "village_id": "V12",
+          "litres": 4090
+        },
+        {
+          "unit_id": "V05-1",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-2",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-3",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-4",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-5",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-6",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-7",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-8",
+          "village_id": "V05",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V05-9",
+          "village_id": "V05",
+          "litres": 1935
+        },
+        {
+          "unit_id": "V15-1",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-2",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-3",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-4",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-5",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-6",
+          "village_id": "V15",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V15-7",
+          "village_id": "V15",
+          "litres": 1635
+        },
+        {
+          "unit_id": "V26-1",
+          "village_id": "V26",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V26-2",
+          "village_id": "V26",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V26-3",
+          "village_id": "V26",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V26-4",
+          "village_id": "V26",
+          "litres": 6415
+        },
+        {
+          "unit_id": "V23-2",
+          "village_id": "V23",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V23-3",
+          "village_id": "V23",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V23-4",
+          "village_id": "V23",
+          "litres": 9210
+        },
+        {
+          "unit_id": "V20-1",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-2",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-3",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-4",
+          "village_id": "V20",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V20-5",
+          "village_id": "V20",
+          "litres": 4605
+        },
+        {
+          "unit_id": "V32-1",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-2",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-3",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-4",
+          "village_id": "V32",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V32-5",
+          "village_id": "V32",
+          "litres": 1715
+        },
+        {
+          "unit_id": "V08-1",
+          "village_id": "V08",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V08-2",
+          "village_id": "V08",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V08-3",
+          "village_id": "V08",
+          "litres": 7720
+        },
+        {
+          "unit_id": "V11-1",
+          "village_id": "V11",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V11-2",
+          "village_id": "V11",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V11-3",
+          "village_id": "V11",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V11-4",
+          "village_id": "V11",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V11-5",
+          "village_id": "V11",
+          "litres": 6785
+        },
+        {
+          "unit_id": "V19-1",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-2",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-3",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-4",
+          "village_id": "V19",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V19-5",
+          "village_id": "V19",
+          "litres": 6780
+        },
+        {
+          "unit_id": "V10-1",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-2",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-3",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-4",
+          "village_id": "V10",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V10-5",
+          "village_id": "V10",
+          "litres": 8660
+        },
+        {
+          "unit_id": "V14-1",
+          "village_id": "V14",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V14-2",
+          "village_id": "V14",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V14-3",
+          "village_id": "V14",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V14-4",
+          "village_id": "V14",
+          "litres": 6560
+        },
+        {
+          "unit_id": "V30-1",
+          "village_id": "V30",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V30-2",
+          "village_id": "V30",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V30-3",
+          "village_id": "V30",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V30-4",
+          "village_id": "V30",
+          "litres": 8955
+        },
+        {
+          "unit_id": "V24-1",
+          "village_id": "V24",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V24-2",
+          "village_id": "V24",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V24-3",
+          "village_id": "V24",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V24-4",
+          "village_id": "V24",
+          "litres": 8690
+        },
+        {
+          "unit_id": "V21-1",
+          "village_id": "V21",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V21-2",
+          "village_id": "V21",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V21-3",
+          "village_id": "V21",
+          "litres": 5255
+        },
+        {
+          "unit_id": "V29-1",
+          "village_id": "V29",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V29-2",
+          "village_id": "V29",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V29-3",
+          "village_id": "V29",
+          "litres": 2780
+        },
+        {
+          "unit_id": "V16-1",
+          "village_id": "V16",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V16-2",
+          "village_id": "V16",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V16-3",
+          "village_id": "V16",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V16-4",
+          "village_id": "V16",
+          "litres": 2565
+        },
+        {
+          "unit_id": "V18-1",
+          "village_id": "V18",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V18-2",
+          "village_id": "V18",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V18-3",
+          "village_id": "V18",
+          "litres": 4220
+        },
+        {
+          "unit_id": "V31-1",
+          "village_id": "V31",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V31-2",
+          "village_id": "V31",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V31-3",
+          "village_id": "V31",
+          "litres": 4805
+        },
+        {
+          "unit_id": "V22-1",
+          "village_id": "V22",
+          "litres": 10000
+        },
+        {
+          "unit_id": "V22-2",
+          "village_id": "V22",
+          "litres": 1310
+        }
+      ],
+      "solver_objective": 653359893,
+      "distance_provider": "haversine x 1.3 detour, 30 km/h",
+      "solver_time_limit_s": 30
+    }
+  },
+  "fraud": {
+    "report": {
+      "n_claims": 26,
+      "flagged": [
+        {
+          "claim_id": "C001",
+          "tanker": "T1",
+          "village": "Kati",
+          "claimed_time": "08:14",
+          "reasons": [
+            "b short_stop: longest stop at Kati was 5 min (< 15 min = 75% of unload time)"
+          ]
+        },
+        {
+          "claim_id": "C005",
+          "tanker": "T2",
+          "village": "Itkal",
+          "claimed_time": "10:59",
+          "reasons": [
+            "c no_refill: 20,000 L claimed since the last filling-point stop (capacity 10,000 L)"
+          ]
+        },
+        {
+          "claim_id": "C008",
+          "tanker": "T3",
+          "village": "Suratgaon",
+          "claimed_time": "10:27",
+          "reasons": [
+            "a no_gps_visit: no GPS point within 300 m of Suratgaon between 09:27 and 11:27"
+          ]
+        },
+        {
+          "claim_id": "C016",
+          "tanker": "T4",
+          "village": "Itkal",
+          "claimed_time": "13:23",
+          "reasons": [
+            "a no_gps_visit: no GPS point within 300 m of Itkal between 12:23 and 14:23"
+          ]
+        },
+        {
+          "claim_id": "C020",
+          "tanker": "T5",
+          "village": "Borgaon",
+          "claimed_time": "08:43",
+          "reasons": [
+            "a no_gps_visit: no GPS point within 300 m of Borgaon between 07:43 and 09:43",
+            "d impossible_speed: 60.8 km from Apsinga (C019) in 8 min = 456 km/h (> 60 km/h)"
+          ]
+        }
+      ]
+    },
+    "evaluation": {
+      "injected": 5,
+      "flagged": 5,
+      "true_positives": 5,
+      "false_positives": [],
+      "missed": [],
+      "precision": 1.0,
+      "recall": 1.0,
+      "types_caught": [
+        "a_no_visit",
+        "b_short_stop",
+        "c_no_refill",
+        "d_impossible_speed"
+      ],
+      "per_injected": [
+        {
+          "claim_id": "C001",
+          "type": "b_short_stop",
+          "flagged": true
+        },
+        {
+          "claim_id": "C005",
+          "type": "c_no_refill",
+          "flagged": true
+        },
+        {
+          "claim_id": "C008",
+          "type": "a_no_visit",
+          "flagged": true
+        },
+        {
+          "claim_id": "C016",
+          "type": "a_no_visit",
+          "flagged": true
+        },
+        {
+          "claim_id": "C020",
+          "type": "d_impossible_speed",
+          "flagged": true
+        }
+      ]
+    },
+    "claims": [
+      {
+        "tanker": "T1",
+        "village_id": "V04",
+        "litres": 10000,
+        "claimed_min": 74,
+        "injected_fraud": "b_short_stop",
+        "claim_id": "C001"
+      },
+      {
+        "tanker": "T1",
+        "village_id": "V27",
+        "litres": 10000,
+        "claimed_min": 260,
+        "injected_fraud": null,
+        "claim_id": "C002"
+      },
+      {
+        "tanker": "T1",
+        "village_id": "V09",
+        "litres": 10000,
+        "claimed_min": 484,
+        "injected_fraud": null,
+        "claim_id": "C003"
+      },
+      {
+        "tanker": "T2",
+        "village_id": "V04",
+        "litres": 10000,
+        "claimed_min": 74,
+        "injected_fraud": null,
+        "claim_id": "C004"
+      },
+      {
+        "tanker": "T2",
+        "village_id": "V03",
+        "litres": 10000,
+        "claimed_min": 239,
+        "injected_fraud": "c_no_refill",
+        "claim_id": "C005"
+      },
+      {
+        "tanker": "T2",
+        "village_id": "V09",
+        "litres": 10000,
+        "claimed_min": 442,
+        "injected_fraud": null,
+        "claim_id": "C006"
+      },
+      {
+        "tanker": "T3",
+        "village_id": "V09",
+        "litres": 10000,
+        "claimed_min": 112,
+        "injected_fraud": null,
+        "claim_id": "C007"
+      },
+      {
+        "tanker": "T3",
+        "village_id": "V01",
+        "litres": 10000,
+        "claimed_min": 207,
+        "injected_fraud": "a_no_visit",
+        "claim_id": "C008"
+      },
+      {
+        "tanker": "T3",
+        "village_id": "V02",
+        "litres": 10000,
+        "claimed_min": 250,
+        "injected_fraud": null,
+        "claim_id": "C009"
+      },
+      {
+        "tanker": "T3",
+        "village_id": "V02",
+        "litres": 10000,
+        "claimed_min": 306,
+        "injected_fraud": null,
+        "claim_id": "C010"
+      },
+      {
+        "tanker": "T3",
+        "village_id": "V06",
+        "litres": 10000,
+        "claimed_min": 371,
+        "injected_fraud": null,
+        "claim_id": "C011"
+      },
+      {
+        "tanker": "T3",
+        "village_id": "V13",
+        "litres": 10000,
+        "claimed_min": 502,
+        "injected_fraud": null,
+        "claim_id": "C012"
+      },
+      {
+        "tanker": "T4",
+        "village_id": "V06",
+        "litres": 10000,
+        "claimed_min": 39,
+        "injected_fraud": null,
+        "claim_id": "C013"
+      },
+      {
+        "tanker": "T4",
+        "village_id": "V04",
+        "litres": 10000,
+        "claimed_min": 148,
+        "injected_fraud": null,
+        "claim_id": "C014"
+      },
+      {
+        "tanker": "T4",
+        "village_id": "V01",
+        "litres": 10000,
+        "claimed_min": 284,
+        "injected_fraud": null,
+        "claim_id": "C015"
+      },
+      {
+        "tanker": "T4",
+        "village_id": "V03",
+        "litres": 10000,
+        "claimed_min": 383,
+        "injected_fraud": "a_no_visit",
+        "claim_id": "C016"
+      },
+      {
+        "tanker": "T4",
+        "village_id": "V07",
+        "litres": 10000,
+        "claimed_min": 449,
+        "injected_fraud": null,
+        "claim_id": "C017"
+      },
+      {
+        "tanker": "T5",
+        "village_id": "V02",
+        "litres": 10000,
+        "claimed_min": 30,
+        "injected_fraud": null,
+        "claim_id": "C018"
+      },
+      {
+        "tanker": "T5",
+        "village_id": "V06",
+        "litres": 10000,
+        "claimed_min": 95,
+        "injected_fraud": null,
+        "claim_id": "C019"
+      },
+      {
+        "tanker": "T5",
+        "village_id": "V24",
+        "litres": 10000,
+        "claimed_min": 103,
+        "injected_fraud": "d_impossible_speed",
+        "claim_id": "C020"
+      },
+      {
+        "tanker": "T5",
+        "village_id": "V27",
+        "litres": 10000,
+        "claimed_min": 246,
+        "injected_fraud": null,
+        "claim_id": "C021"
+      },
+      {
+        "tanker": "T5",
+        "village_id": "V28",
+        "litres": 10000,
+        "claimed_min": 471,
+        "injected_fraud": null,
+        "claim_id": "C022"
+      },
+      {
+        "tanker": "T6",
+        "village_id": "V28",
+        "litres": 10000,
+        "claimed_min": 113,
+        "injected_fraud": null,
+        "claim_id": "C023"
+      },
+      {
+        "tanker": "T6",
+        "village_id": "V23",
+        "litres": 10000,
+        "claimed_min": 267,
+        "injected_fraud": null,
+        "claim_id": "C024"
+      },
+      {
+        "tanker": "T6",
+        "village_id": "V17",
+        "litres": 10000,
+        "claimed_min": 361,
+        "injected_fraud": null,
+        "claim_id": "C025"
+      },
+      {
+        "tanker": "T6",
+        "village_id": "V13",
+        "litres": 10000,
+        "claimed_min": 506,
+        "injected_fraud": null,
+        "claim_id": "C026"
+      }
+    ]
+  },
+  "timings_s": {
+    "solver": 30.01,
+    "naive": 0.0,
+    "fraud_detection": 0.008,
+    "total_script": 36.0
+  }
+}
