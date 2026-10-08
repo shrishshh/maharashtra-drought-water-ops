@@ -1,0 +1,421 @@
+{
+  "label": "SIMULATED wards on a representative sample network (EPA Net3) - not real wards",
+  "method": "KMeans(n_clusters=6, random_state=42) on demand-junction coordinates",
+  "source_nodes": [
+    "1",
+    "10",
+    "2",
+    "3",
+    "60",
+    "61",
+    "Lake",
+    "River"
+  ],
+  "junction_to_ward": {
+    "101": "Ward C",
+    "103": "Ward C",
+    "105": "Ward C",
+    "107": "Ward C",
+    "109": "Ward C",
+    "111": "Ward C",
+    "113": "Ward D",
+    "115": "Ward C",
+    "117": "Ward C",
+    "119": "Ward B",
+    "120": "Ward B",
+    "121": "Ward B",
+    "123": "Ward B",
+    "125": "Ward B",
+    "127": "Ward B",
+    "129": "Ward B",
+    "131": "Ward A",
+    "139": "Ward A",
+    "141": "Ward A",
+    "143": "Ward A",
+    "145": "Ward A",
+    "147": "Ward B",
+    "149": "Ward B",
+    "15": "Ward A",
+    "151": "Ward B",
+    "153": "Ward B",
+    "157": "Ward B",
+    "159": "Ward D",
+    "161": "Ward D",
+    "163": "Ward D",
+    "164": "Ward D",
+    "166": "Ward D",
+    "167": "Ward D",
+    "169": "Ward D",
+    "171": "Ward D",
+    "173": "Ward D",
+    "177": "Ward D",
+    "179": "Ward D",
+    "181": "Ward D",
+    "183": "Ward D",
+    "184": "Ward D",
+    "185": "Ward D",
+    "187": "Ward D",
+    "189": "Ward D",
+    "191": "Ward D",
+    "193": "Ward D",
+    "195": "Ward D",
+    "197": "Ward D",
+    "199": "Ward F",
+    "20": "Ward B",
+    "201": "Ward F",
+    "203": "Ward F",
+    "204": "Ward D",
+    "205": "Ward F",
+    "206": "Ward F",
+    "207": "Ward F",
+    "208": "Ward F",
+    "209": "Ward F",
+    "211": "Ward F",
+    "213": "Ward F",
+    "215": "Ward E",
+    "217": "Ward E",
+    "219": "Ward E",
+    "225": "Ward E",
+    "229": "Ward F",
+    "231": "Ward F",
+    "237": "Ward F",
+    "239": "Ward F",
+    "241": "Ward F",
+    "243": "Ward F",
+    "247": "Ward F",
+    "249": "Ward F",
+    "251": "Ward F",
+    "253": "Ward F",
+    "255": "Ward F",
+    "257": "Ward C",
+    "259": "Ward C",
+    "261": "Ward C",
+    "263": "Ward C",
+    "265": "Ward D",
+    "267": "Ward D",
+    "269": "Ward D",
+    "271": "Ward D",
+    "273": "Ward F",
+    "275": "Ward F",
+    "35": "Ward D",
+    "40": "Ward D",
+    "50": "Ward F",
+    "601": "Ward B"
+  },
+  "wards": {
+    "Ward A": {
+      "demand_junctions": [
+        "15",
+        "131",
+        "139",
+        "141",
+        "143",
+        "145"
+      ],
+      "other_junctions": [],
+      "boundary_links": [
+        {
+          "link": "137",
+          "sign": 1
+        },
+        {
+          "link": "145",
+          "sign": 1
+        },
+        {
+          "link": "155",
+          "sign": 1
+        }
+      ],
+      "inlet_pipes": [
+        "137",
+        "145",
+        "155"
+      ],
+      "centroid": [
+        36.0,
+        23.7
+      ]
+    },
+    "Ward B": {
+      "demand_junctions": [
+        "119",
+        "121",
+        "123",
+        "125",
+        "127",
+        "147",
+        "149",
+        "151",
+        "153",
+        "157"
+      ],
+      "other_junctions": [
+        "20",
+        "601",
+        "120",
+        "129"
+      ],
+      "boundary_links": [
+        {
+          "link": "20",
+          "sign": 1
+        },
+        {
+          "link": "121",
+          "sign": -1
+        },
+        {
+          "link": "137",
+          "sign": -1
+        },
+        {
+          "link": "145",
+          "sign": -1
+        },
+        {
+          "link": "155",
+          "sign": -1
+        },
+        {
+          "link": "175",
+          "sign": -1
+        },
+        {
+          "link": "297",
+          "sign": -1
+        },
+        {
+          "link": "329",
+          "sign": 1
+        },
+        {
+          "link": "330",
+          "sign": 1
+        },
+        {
+          "link": "333",
+          "sign": -1
+        }
+      ],
+      "inlet_pipes": [
+        "20",
+        "329",
+        "330",
+        "333"
+      ],
+      "centroid": [
+        26.56,
+        23.29
+      ]
+    },
+    "Ward C": {
+      "demand_junctions": [
+        "101",
+        "103",
+        "105",
+        "107",
+        "109",
+        "111",
+        "115",
+        "117"
+      ],
+      "other_junctions": [
+        "257",
+        "259",
+        "261",
+        "263"
+      ],
+      "boundary_links": [
+        {
+          "link": "101",
+          "sign": 1
+        },
+        {
+          "link": "113",
+          "sign": -1
+        },
+        {
+          "link": "114",
+          "sign": -1
+        },
+        {
+          "link": "121",
+          "sign": 1
+        },
+        {
+          "link": "225",
+          "sign": -1
+        },
+        {
+          "link": "297",
+          "sign": 1
+        }
+      ],
+      "inlet_pipes": [
+        "101",
+        "121",
+        "297"
+      ],
+      "centroid": [
+        17.84,
+        20.36
+      ]
+    },
+    "Ward D": {
+      "demand_junctions": [
+        "35",
+        "113",
+        "159",
+        "161",
+        "163",
+        "166",
+        "167",
+        "171",
+        "177",
+        "185",
+        "189",
+        "191",
+        "193",
+        "197"
+      ],
+      "other_junctions": [
+        "40",
+        "164",
+        "169",
+        "173",
+        "179",
+        "181",
+        "183",
+        "184",
+        "187",
+        "195",
+        "204",
+        "265",
+        "267",
+        "269",
+        "271"
+      ],
+      "boundary_links": [
+        {
+          "link": "40",
+          "sign": 1
+        },
+        {
+          "link": "113",
+          "sign": 1
+        },
+        {
+          "link": "114",
+          "sign": 1
+        },
+        {
+          "link": "175",
+          "sign": 1
+        },
+        {
+          "link": "204",
+          "sign": -1
+        },
+        {
+          "link": "225",
+          "sign": 1
+        },
+        {
+          "link": "229",
+          "sign": -1
+        }
+      ],
+      "inlet_pipes": [
+        "40",
+        "113",
+        "114",
+        "175",
+        "225"
+      ],
+      "centroid": [
+        24.35,
+        13.57
+      ]
+    },
+    "Ward E": {
+      "demand_junctions": [
+        "215",
+        "217",
+        "219",
+        "225"
+      ],
+      "other_junctions": [],
+      "boundary_links": [
+        {
+          "link": "247",
+          "sign": 1
+        }
+      ],
+      "inlet_pipes": [
+        "247"
+      ],
+      "centroid": [
+        42.61,
+        8.53
+      ]
+    },
+    "Ward F": {
+      "demand_junctions": [
+        "199",
+        "201",
+        "203",
+        "205",
+        "207",
+        "209",
+        "211",
+        "213",
+        "229",
+        "231",
+        "237",
+        "239",
+        "243",
+        "247",
+        "251",
+        "253",
+        "255"
+      ],
+      "other_junctions": [
+        "50",
+        "206",
+        "208",
+        "241",
+        "249",
+        "273",
+        "275"
+      ],
+      "boundary_links": [
+        {
+          "link": "50",
+          "sign": 1
+        },
+        {
+          "link": "204",
+          "sign": 1
+        },
+        {
+          "link": "229",
+          "sign": 1
+        },
+        {
+          "link": "247",
+          "sign": -1
+        }
+      ],
+      "inlet_pipes": [
+        "50",
+        "204",
+        "229"
+      ],
+      "centroid": [
+        33.67,
+        4.48
+      ]
+    }
+  }
+}

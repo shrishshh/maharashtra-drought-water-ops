@@ -1,0 +1,1456 @@
+{
+  "label": "Representative sample network (EPA Net3), SIMULATED - wards, leaks and results are simulated",
+  "config": {
+    "inp_file": "data/networks/Net3.inp",
+    "sim_days": 7,
+    "eval_hours": 24,
+    "timestep_s": 3600,
+    "required_pressure_m": 12.0,
+    "minimum_pressure_m": 0.0,
+    "pressure_exponent": 0.5,
+    "target_reduction": 0.1,
+    "reduction_band": [
+      0.095,
+      0.105
+    ],
+    "dry_threshold": 0.5,
+    "underserved_threshold": 0.8,
+    "source_mains": [
+      "60",
+      "101"
+    ],
+    "max_minor_loss": 10000000.0,
+    "continuity_tol_m3s": 1e-06,
+    "tank_storage_tol_m3": 1.0,
+    "tank_storage_tol_frac": 0.01,
+    "phantom_min_steps": 3,
+    "n_wards": 6,
+    "ward_seed": 42
+  },
+  "timing_s": {
+    "one_scenario_run": 1.13,
+    "sim_runtime_mean": 6.24,
+    "sim_runtime_max": 87.41,
+    "candidate_eval_mean": 30.8,
+    "candidate_eval_max": 154.4,
+    "fair_search_wall": 268.2,
+    "fair_search_workers": 15,
+    "total_script": 293.1
+  },
+  "baseline": {
+    "reduction_pct": 0.0,
+    "underserved_count": 0,
+    "dry_count": 0,
+    "min_ratio": 1.0,
+    "weighted_mean_ratio": 1.0,
+    "ward_mean_ratio": {
+      "Ward A": 1.0,
+      "Ward B": 1.0,
+      "Ward C": 1.0,
+      "Ward D": 1.0,
+      "Ward E": 1.0,
+      "Ward F": 1.0
+    },
+    "vol_delivered_m3": 59675.7,
+    "water_balance": {
+      "ok": true,
+      "max_continuity_residual_m3s": 4.440892098500626e-16,
+      "tank_storage_mismatch_frac": {
+        "1": 0.0216,
+        "2": 0.0156,
+        "3": 0.039
+      }
+    }
+  },
+  "scenarios": {
+    "BLUNT": {
+      "reduction_pct": 10.418,
+      "underserved_count": 14,
+      "dry_count": 3,
+      "min_ratio": 0.2885,
+      "weighted_mean_ratio": 0.8958,
+      "ward_mean_ratio": {
+        "Ward A": 0.901,
+        "Ward B": 0.8037,
+        "Ward C": 0.8001,
+        "Ward D": 0.9225,
+        "Ward E": 0.8964,
+        "Ward F": 0.8087
+      },
+      "junction_ratio": {
+        "15": 0.6833,
+        "35": 0.8983,
+        "101": 0.5929,
+        "103": 0.5807,
+        "105": 0.7691,
+        "107": 0.8465,
+        "109": 0.8591,
+        "111": 0.9284,
+        "113": 0.9722,
+        "115": 0.9066,
+        "117": 0.9177,
+        "119": 0.9903,
+        "121": 0.9984,
+        "123": 0.9501,
+        "125": 0.9593,
+        "127": 0.3896,
+        "131": 0.9825,
+        "139": 0.7645,
+        "141": 0.9845,
+        "143": 0.999,
+        "145": 0.992,
+        "147": 0.8955,
+        "149": 0.9171,
+        "151": 0.717,
+        "153": 0.2885,
+        "157": 0.9314,
+        "159": 0.9615,
+        "161": 0.9659,
+        "163": 0.9593,
+        "166": 0.9898,
+        "167": 0.9936,
+        "171": 0.991,
+        "177": 0.9322,
+        "185": 0.8581,
+        "189": 0.9577,
+        "191": 0.7729,
+        "193": 0.8574,
+        "197": 0.8052,
+        "199": 0.9685,
+        "201": 0.9544,
+        "203": 0.9421,
+        "205": 0.7503,
+        "207": 0.8832,
+        "209": 0.9625,
+        "211": 0.8917,
+        "213": 0.8912,
+        "215": 0.8901,
+        "217": 0.8993,
+        "219": 0.9163,
+        "225": 0.88,
+        "229": 0.8538,
+        "231": 0.9077,
+        "237": 0.8151,
+        "239": 0.8262,
+        "243": 0.8147,
+        "247": 0.763,
+        "251": 0.5296,
+        "253": 0.4033,
+        "255": 0.5914
+      },
+      "throttle_settings": {
+        "60": 436.643,
+        "101": 436.643
+      },
+      "lever": "same throttle K on both source mains"
+    },
+    "FAIR": {
+      "reduction_pct": 10.226,
+      "underserved_count": 9,
+      "dry_count": 0,
+      "min_ratio": 0.5675,
+      "weighted_mean_ratio": 0.8977,
+      "ward_mean_ratio": {
+        "Ward A": 0.9322,
+        "Ward B": 0.8714,
+        "Ward C": 0.8265,
+        "Ward D": 0.9435,
+        "Ward E": 0.8746,
+        "Ward F": 0.8049
+      },
+      "junction_ratio": {
+        "15": 0.8059,
+        "35": 0.9233,
+        "101": 0.639,
+        "103": 0.6259,
+        "105": 0.8108,
+        "107": 0.8673,
+        "109": 0.8761,
+        "111": 0.9418,
+        "113": 0.9823,
+        "115": 0.9207,
+        "117": 0.9308,
+        "119": 0.9932,
+        "121": 0.9996,
+        "123": 0.9647,
+        "125": 0.9691,
+        "127": 0.6076,
+        "131": 0.9882,
+        "139": 0.8184,
+        "141": 0.9878,
+        "143": 0.9996,
+        "145": 0.9934,
+        "147": 0.9165,
+        "149": 0.9318,
+        "151": 0.8002,
+        "153": 0.5868,
+        "157": 0.9444,
+        "159": 0.9736,
+        "161": 0.978,
+        "163": 0.9726,
+        "166": 0.9936,
+        "167": 0.9969,
+        "171": 0.9947,
+        "177": 0.9482,
+        "185": 0.8946,
+        "189": 0.9713,
+        "191": 0.8359,
+        "193": 0.8902,
+        "197": 0.8535,
+        "199": 0.9392,
+        "201": 0.9244,
+        "203": 0.9096,
+        "205": 0.7262,
+        "207": 0.8604,
+        "209": 0.9348,
+        "211": 0.8699,
+        "213": 0.8696,
+        "215": 0.8688,
+        "217": 0.8768,
+        "219": 0.8925,
+        "225": 0.8602,
+        "229": 0.838,
+        "231": 0.8847,
+        "237": 0.8034,
+        "239": 0.8137,
+        "243": 0.8032,
+        "247": 0.7536,
+        "251": 0.5828,
+        "253": 0.5675,
+        "255": 0.6031
+      },
+      "throttle_settings": {
+        "137": 393.463,
+        "145": 393.463,
+        "155": 393.463,
+        "20": 1150.546,
+        "329": 1150.546,
+        "330": 1150.546,
+        "333": 1150.546,
+        "101": 0.671,
+        "121": 0.671,
+        "297": 0.671,
+        "40": 0.276,
+        "113": 0.276,
+        "114": 0.276,
+        "175": 0.276,
+        "225": 0.276,
+        "247": 1.124,
+        "50": 109.321,
+        "204": 109.321,
+        "229": 109.321
+      },
+      "lever": "per-ward throttle K on each ward's inlet pipes",
+      "ward_settings": {
+        "Ward A": 393.463,
+        "Ward B": 1150.546,
+        "Ward C": 0.671,
+        "Ward D": 0.276,
+        "Ward E": 1.124,
+        "Ward F": 109.321
+      },
+      "candidate_id": 46
+    }
+  },
+  "fair_search": {
+    "n_candidates": 58,
+    "n_feasible": 45,
+    "n_simulations": 265,
+    "n_nonconverged_simulations": 13,
+    "method": "40 Latin-hypercube per-ward log10 throttle shapes in [-2, 2] + 3 refinement rounds (top 3 x 2 Gaussian children, sigma 0.5/0.3/0.15); each candidate scaled to hit the band",
+    "ranking": "min under-served count, then max min-ratio, then max demand-weighted mean",
+    "candidates": [
+      {
+        "candidate_id": 0,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 41.706,
+          "Ward B": 781.631,
+          "Ward C": 254.157,
+          "Ward D": 912.434,
+          "Ward E": 89.681,
+          "Ward F": 197.379
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.489,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8951
+        },
+        "n_sims": 9,
+        "runtime_s": 39.46
+      },
+      {
+        "candidate_id": 1,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 88.801,
+          "Ward B": 584.544,
+          "Ward C": 587.784,
+          "Ward D": 634.041,
+          "Ward E": 165.431,
+          "Ward F": 526.16
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.983,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.9002
+        },
+        "n_sims": 7,
+        "runtime_s": 53.73
+      },
+      {
+        "candidate_id": 2,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 0.436,
+          "Ward B": 0.832,
+          "Ward C": 0.206,
+          "Ward D": 811.316,
+          "Ward E": 367.189,
+          "Ward F": 1216.718
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.786,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.9021
+        },
+        "n_sims": 4,
+        "runtime_s": 17.63
+      },
+      {
+        "candidate_id": 3,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=38 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 6.57
+      },
+      {
+        "candidate_id": 4,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 47.37,
+          "Ward B": 846.451,
+          "Ward C": 10.777,
+          "Ward D": 15.396,
+          "Ward E": 0.413,
+          "Ward F": 1065.864
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.909,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.9009
+        },
+        "n_sims": 5,
+        "runtime_s": 17.3
+      },
+      {
+        "candidate_id": 5,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 1220.104,
+          "Ward B": 0.648,
+          "Ward C": 2.162,
+          "Ward D": 8.258,
+          "Ward E": 7.36,
+          "Ward F": 1306.162
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.163,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8984
+        },
+        "n_sims": 5,
+        "runtime_s": 65.4
+      },
+      {
+        "candidate_id": 6,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 23.086,
+          "Ward B": 5.011,
+          "Ward C": 521.607,
+          "Ward D": 2426.294,
+          "Ward E": 1.491,
+          "Ward F": 205.279
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.802,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0136,
+          "weighted_mean_ratio": 0.902
+        },
+        "n_sims": 6,
+        "runtime_s": 84.01
+      },
+      {
+        "candidate_id": 7,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 5.479,
+          "Ward B": 1011.628,
+          "Ward C": 422.397,
+          "Ward D": 2.603,
+          "Ward E": 9563.587,
+          "Ward F": 1.72
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.674,
+          "underserved_count": 15,
+          "dry_count": 3,
+          "min_ratio": 0.3164,
+          "weighted_mean_ratio": 0.9033
+        },
+        "n_sims": 7,
+        "runtime_s": 60.21
+      },
+      {
+        "candidate_id": 8,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 207.989,
+          "Ward B": 480.552,
+          "Ward C": 2.151,
+          "Ward D": 1021.035,
+          "Ward E": 1155.954,
+          "Ward F": 676.146
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.857,
+          "underserved_count": 17,
+          "dry_count": 5,
+          "min_ratio": 0.0294,
+          "weighted_mean_ratio": 0.9014
+        },
+        "n_sims": 7,
+        "runtime_s": 35.19
+      },
+      {
+        "candidate_id": 9,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 690.562,
+          "Ward B": 2.861,
+          "Ward C": 3.89,
+          "Ward D": 6.817,
+          "Ward E": 47.163,
+          "Ward F": 1295.695
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.101,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.899
+        },
+        "n_sims": 4,
+        "runtime_s": 35.04
+      },
+      {
+        "candidate_id": 10,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=6 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 7.23
+      },
+      {
+        "candidate_id": 11,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=14 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 7.09
+      },
+      {
+        "candidate_id": 12,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 56.523,
+          "Ward B": 1184.2,
+          "Ward C": 0.671,
+          "Ward D": 0.452,
+          "Ward E": 4.417,
+          "Ward F": 1.775
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.32,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5693,
+          "weighted_mean_ratio": 0.8968
+        },
+        "n_sims": 5,
+        "runtime_s": 17.66
+      },
+      {
+        "candidate_id": 13,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 2456.787,
+          "Ward B": 856.777,
+          "Ward C": 134.328,
+          "Ward D": 179.708,
+          "Ward E": 4.922,
+          "Ward F": 674.944
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.228,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8977
+        },
+        "n_sims": 6,
+        "runtime_s": 46.18
+      },
+      {
+        "candidate_id": 14,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 6285.163,
+          "Ward B": 836.597,
+          "Ward C": 1070.82,
+          "Ward D": 140.967,
+          "Ward E": 351.25,
+          "Ward F": 91.794
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.028,
+          "underserved_count": 15,
+          "dry_count": 3,
+          "min_ratio": 0.2737,
+          "weighted_mean_ratio": 0.8997
+        },
+        "n_sims": 10,
+        "runtime_s": 104.06
+      },
+      {
+        "candidate_id": 15,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=14 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 12.16
+      },
+      {
+        "candidate_id": 16,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 2.124,
+          "Ward B": 982.987,
+          "Ward C": 84.479,
+          "Ward D": 0.165,
+          "Ward E": 0.541,
+          "Ward F": 580.694
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.11,
+          "underserved_count": 18,
+          "dry_count": 4,
+          "min_ratio": 0.1348,
+          "weighted_mean_ratio": 0.8989
+        },
+        "n_sims": 4,
+        "runtime_s": 46.1
+      },
+      {
+        "candidate_id": 17,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 1.122,
+          "Ward B": 436.767,
+          "Ward C": 507.399,
+          "Ward D": 1439.627,
+          "Ward E": 4301.797,
+          "Ward F": 13.312
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.934,
+          "underserved_count": 17,
+          "dry_count": 3,
+          "min_ratio": 0.1255,
+          "weighted_mean_ratio": 0.9007
+        },
+        "n_sims": 7,
+        "runtime_s": 75.25
+      },
+      {
+        "candidate_id": 18,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 9.182,
+          "Ward B": 222.086,
+          "Ward C": 105.177,
+          "Ward D": 1280.916,
+          "Ward E": 19200.864,
+          "Ward F": 803.75
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.922,
+          "underserved_count": 17,
+          "dry_count": 5,
+          "min_ratio": 0.0034,
+          "weighted_mean_ratio": 0.9008
+        },
+        "n_sims": 7,
+        "runtime_s": 44.16
+      },
+      {
+        "candidate_id": 19,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 539.321,
+          "Ward B": 1140.374,
+          "Ward C": 70.998,
+          "Ward D": 16.544,
+          "Ward E": 24.572,
+          "Ward F": 0.448
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.11,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5284,
+          "weighted_mean_ratio": 0.8989
+        },
+        "n_sims": 4,
+        "runtime_s": 29.92
+      },
+      {
+        "candidate_id": 20,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 65.77,
+          "Ward B": 5.71,
+          "Ward C": 275.505,
+          "Ward D": 116.985,
+          "Ward E": 2797.88,
+          "Ward F": 1249.767
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.037,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8996
+        },
+        "n_sims": 6,
+        "runtime_s": 86.54
+      },
+      {
+        "candidate_id": 21,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=14 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 14.37
+      },
+      {
+        "candidate_id": 22,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 59140.671,
+          "Ward B": 30.108,
+          "Ward C": 814.116,
+          "Ward D": 72.692,
+          "Ward E": 51.037,
+          "Ward F": 1133.147
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.255,
+          "underserved_count": 18,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8975
+        },
+        "n_sims": 7,
+        "runtime_s": 75.63
+      },
+      {
+        "candidate_id": 23,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=6 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 11.72
+      },
+      {
+        "candidate_id": 24,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 7.164,
+          "Ward B": 80.18,
+          "Ward C": 24.517,
+          "Ward D": 2.84,
+          "Ward E": 1.394,
+          "Ward F": 1262.593
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.083,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8992
+        },
+        "n_sims": 5,
+        "runtime_s": 27.52
+      },
+      {
+        "candidate_id": 25,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 46.979,
+          "Ward B": 20.721,
+          "Ward C": 8.5,
+          "Ward D": 335.2,
+          "Ward E": 430.531,
+          "Ward F": 1258.358
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.984,
+          "underserved_count": 17,
+          "dry_count": 4,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.9002
+        },
+        "n_sims": 5,
+        "runtime_s": 52.39
+      },
+      {
+        "candidate_id": 26,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=38 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 12.83
+      },
+      {
+        "candidate_id": 27,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 1572.0,
+          "Ward B": 1172.877,
+          "Ward C": 3.312,
+          "Ward D": 0.68,
+          "Ward E": 6.621,
+          "Ward F": 20.633
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.376,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5785,
+          "weighted_mean_ratio": 0.8962
+        },
+        "n_sims": 5,
+        "runtime_s": 27.98
+      },
+      {
+        "candidate_id": 28,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=62 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 25.4
+      },
+      {
+        "candidate_id": 29,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=38 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 13.67
+      },
+      {
+        "candidate_id": 30,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 5584.025,
+          "Ward B": 181.154,
+          "Ward C": 1123.175,
+          "Ward D": 1931.734,
+          "Ward E": 7025.016,
+          "Ward F": 43.008
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.462,
+          "underserved_count": 18,
+          "dry_count": 3,
+          "min_ratio": 0.0624,
+          "weighted_mean_ratio": 0.8954
+        },
+        "n_sims": 9,
+        "runtime_s": 154.38
+      },
+      {
+        "candidate_id": 31,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=6 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 11.85
+      },
+      {
+        "candidate_id": 32,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 16315.627,
+          "Ward B": 4.545,
+          "Ward C": 15.845,
+          "Ward D": 2.232,
+          "Ward E": 51.809,
+          "Ward F": 1217.317
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.117,
+          "underserved_count": 18,
+          "dry_count": 3,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8988
+        },
+        "n_sims": 6,
+        "runtime_s": 50.48
+      },
+      {
+        "candidate_id": 33,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 98.715,
+          "Ward B": 682.943,
+          "Ward C": 1016.212,
+          "Ward D": 664.331,
+          "Ward E": 53343.838,
+          "Ward F": 37.075
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.542,
+          "underserved_count": 17,
+          "dry_count": 6,
+          "min_ratio": 0.1661,
+          "weighted_mean_ratio": 0.9046
+        },
+        "n_sims": 8,
+        "runtime_s": 42.72
+      },
+      {
+        "candidate_id": 34,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 37.736,
+          "Ward B": 53.723,
+          "Ward C": 28.442,
+          "Ward D": 2178.499,
+          "Ward E": 7059.229,
+          "Ward F": 535.867
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.052,
+          "underserved_count": 17,
+          "dry_count": 5,
+          "min_ratio": 0.0,
+          "weighted_mean_ratio": 0.8995
+        },
+        "n_sims": 7,
+        "runtime_s": 42.75
+      },
+      {
+        "candidate_id": 35,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=62 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 19.68
+      },
+      {
+        "candidate_id": 36,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 456.633,
+          "Ward B": 1164.574,
+          "Ward C": 2.153,
+          "Ward D": 0.74,
+          "Ward E": 0.72,
+          "Ward F": 84.366
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.326,
+          "underserved_count": 11,
+          "dry_count": 0,
+          "min_ratio": 0.572,
+          "weighted_mean_ratio": 0.8967
+        },
+        "n_sims": 4,
+        "runtime_s": 22.62
+      },
+      {
+        "candidate_id": 37,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 79.224,
+          "Ward B": 492.445,
+          "Ward C": 1.568,
+          "Ward D": 1764.648,
+          "Ward E": 154.938,
+          "Ward F": 31.121
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 9.982,
+          "underserved_count": 17,
+          "dry_count": 3,
+          "min_ratio": 0.0549,
+          "weighted_mean_ratio": 0.9002
+        },
+        "n_sims": 7,
+        "runtime_s": 30.47
+      },
+      {
+        "candidate_id": 38,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=62 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 16.31
+      },
+      {
+        "candidate_id": 39,
+        "feasible": false,
+        "ward_settings": null,
+        "reason": "simulation stopped at t=14 h of 168 h (did not converge)",
+        "metrics": {},
+        "n_sims": 2,
+        "runtime_s": 12.89
+      },
+      {
+        "candidate_id": 40,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 380.762,
+          "Ward B": 1165.076,
+          "Ward C": 1.307,
+          "Ward D": 0.221,
+          "Ward E": 0.355,
+          "Ward F": 22.431
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.197,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5755,
+          "weighted_mean_ratio": 0.898
+        },
+        "n_sims": 4,
+        "runtime_s": 11.12
+      },
+      {
+        "candidate_id": 41,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 402.396,
+          "Ward B": 1150.412,
+          "Ward C": 1.004,
+          "Ward D": 0.298,
+          "Ward E": 1.041,
+          "Ward F": 104.605
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.218,
+          "underserved_count": 10,
+          "dry_count": 0,
+          "min_ratio": 0.5687,
+          "weighted_mean_ratio": 0.8978
+        },
+        "n_sims": 4,
+        "runtime_s": 11.01
+      },
+      {
+        "candidate_id": 42,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 5035.265,
+          "Ward B": 1140.046,
+          "Ward C": 9.085,
+          "Ward D": 4.297,
+          "Ward E": 3.997,
+          "Ward F": 34.564
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.322,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5886,
+          "weighted_mean_ratio": 0.8968
+        },
+        "n_sims": 8,
+        "runtime_s": 25.39
+      },
+      {
+        "candidate_id": 43,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 766.837,
+          "Ward B": 1156.92,
+          "Ward C": 1.73,
+          "Ward D": 2.259,
+          "Ward E": 6.7,
+          "Ward F": 122.745
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.353,
+          "underserved_count": 12,
+          "dry_count": 0,
+          "min_ratio": 0.5618,
+          "weighted_mean_ratio": 0.8965
+        },
+        "n_sims": 8,
+        "runtime_s": 19.53
+      },
+      {
+        "candidate_id": 44,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 84.894,
+          "Ward B": 1197.222,
+          "Ward C": 0.345,
+          "Ward D": 0.345,
+          "Ward E": 5.237,
+          "Ward F": 2.536
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.442,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5676,
+          "weighted_mean_ratio": 0.8956
+        },
+        "n_sims": 5,
+        "runtime_s": 11.41
+      },
+      {
+        "candidate_id": 45,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 16.843,
+          "Ward B": 1185.286,
+          "Ward C": 0.477,
+          "Ward D": 0.477,
+          "Ward E": 25.991,
+          "Ward F": 1.215
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.327,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.5689,
+          "weighted_mean_ratio": 0.8967
+        },
+        "n_sims": 5,
+        "runtime_s": 10.26
+      },
+      {
+        "candidate_id": 46,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 393.463,
+          "Ward B": 1150.546,
+          "Ward C": 0.671,
+          "Ward D": 0.276,
+          "Ward E": 1.124,
+          "Ward F": 109.321
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.226,
+          "underserved_count": 9,
+          "dry_count": 0,
+          "min_ratio": 0.5675,
+          "weighted_mean_ratio": 0.8977
+        },
+        "n_sims": 4,
+        "runtime_s": 10.9
+      },
+      {
+        "candidate_id": 47,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 172.228,
+          "Ward B": 1147.637,
+          "Ward C": 2.561,
+          "Ward D": 0.115,
+          "Ward E": 1.88,
+          "Ward F": 113.319
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.202,
+          "underserved_count": 9,
+          "dry_count": 0,
+          "min_ratio": 0.5644,
+          "weighted_mean_ratio": 0.898
+        },
+        "n_sims": 4,
+        "runtime_s": 11.12
+      },
+      {
+        "candidate_id": 48,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 240.758,
+          "Ward B": 1148.895,
+          "Ward C": 2.993,
+          "Ward D": 0.265,
+          "Ward E": 0.623,
+          "Ward F": 103.176
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.198,
+          "underserved_count": 10,
+          "dry_count": 0,
+          "min_ratio": 0.568,
+          "weighted_mean_ratio": 0.898
+        },
+        "n_sims": 4,
+        "runtime_s": 11.62
+      },
+      {
+        "candidate_id": 49,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 332.429,
+          "Ward B": 1160.376,
+          "Ward C": 1.705,
+          "Ward D": 0.973,
+          "Ward E": 1.614,
+          "Ward F": 43.873
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.194,
+          "underserved_count": 13,
+          "dry_count": 0,
+          "min_ratio": 0.578,
+          "weighted_mean_ratio": 0.8981
+        },
+        "n_sims": 4,
+        "runtime_s": 11.32
+      },
+      {
+        "candidate_id": 50,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 1206.717,
+          "Ward B": 1148.961,
+          "Ward C": 2.583,
+          "Ward D": 1.8,
+          "Ward E": 6.142,
+          "Ward F": 146.59
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.357,
+          "underserved_count": 12,
+          "dry_count": 0,
+          "min_ratio": 0.5543,
+          "weighted_mean_ratio": 0.8964
+        },
+        "n_sims": 7,
+        "runtime_s": 18.78
+      },
+      {
+        "candidate_id": 51,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 643.382,
+          "Ward B": 1150.983,
+          "Ward C": 0.594,
+          "Ward D": 0.594,
+          "Ward E": 4.725,
+          "Ward F": 13.979
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.067,
+          "underserved_count": 12,
+          "dry_count": 0,
+          "min_ratio": 0.5778,
+          "weighted_mean_ratio": 0.8993
+        },
+        "n_sims": 5,
+        "runtime_s": 9.92
+      },
+      {
+        "candidate_id": 52,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 352.959,
+          "Ward B": 1171.183,
+          "Ward C": 1.091,
+          "Ward D": 0.368,
+          "Ward E": 1.056,
+          "Ward F": 101.327
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.406,
+          "underserved_count": 10,
+          "dry_count": 0,
+          "min_ratio": 0.5667,
+          "weighted_mean_ratio": 0.8959
+        },
+        "n_sims": 4,
+        "runtime_s": 10.63
+      },
+      {
+        "candidate_id": 53,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 361.353,
+          "Ward B": 1151.945,
+          "Ward C": 0.58,
+          "Ward D": 0.249,
+          "Ward E": 1.271,
+          "Ward F": 104.986
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.229,
+          "underserved_count": 10,
+          "dry_count": 0,
+          "min_ratio": 0.5684,
+          "weighted_mean_ratio": 0.8977
+        },
+        "n_sims": 4,
+        "runtime_s": 11.32
+      },
+      {
+        "candidate_id": 54,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 235.043,
+          "Ward B": 1141.161,
+          "Ward C": 3.727,
+          "Ward D": 0.168,
+          "Ward E": 4.109,
+          "Ward F": 207.466
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.346,
+          "underserved_count": 12,
+          "dry_count": 0,
+          "min_ratio": 0.5236,
+          "weighted_mean_ratio": 0.8965
+        },
+        "n_sims": 4,
+        "runtime_s": 10.93
+      },
+      {
+        "candidate_id": 55,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 170.112,
+          "Ward B": 1142.971,
+          "Ward C": 2.268,
+          "Ward D": 0.164,
+          "Ward E": 1.869,
+          "Ward F": 138.05
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.206,
+          "underserved_count": 11,
+          "dry_count": 0,
+          "min_ratio": 0.5531,
+          "weighted_mean_ratio": 0.8979
+        },
+        "n_sims": 4,
+        "runtime_s": 11.74
+      },
+      {
+        "candidate_id": 56,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 259.372,
+          "Ward B": 1158.039,
+          "Ward C": 0.564,
+          "Ward D": 0.148,
+          "Ward E": 0.943,
+          "Ward F": 77.165
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.232,
+          "underserved_count": 10,
+          "dry_count": 0,
+          "min_ratio": 0.574,
+          "weighted_mean_ratio": 0.8977
+        },
+        "n_sims": 4,
+        "runtime_s": 10.88
+      },
+      {
+        "candidate_id": 57,
+        "feasible": true,
+        "ward_settings": {
+          "Ward A": 424.692,
+          "Ward B": 1147.292,
+          "Ward C": 0.751,
+          "Ward D": 0.239,
+          "Ward E": 1.114,
+          "Ward F": 123.701
+        },
+        "reason": null,
+        "metrics": {
+          "reduction_pct": 10.224,
+          "underserved_count": 11,
+          "dry_count": 0,
+          "min_ratio": 0.5616,
+          "weighted_mean_ratio": 0.8978
+        },
+        "n_sims": 4,
+        "runtime_s": 10.49
+      }
+    ]
+  },
+  "leaks": {
+    "label": "SIMULATED leaks and simulated bulk-meter noise on a sample network",
+    "leaks": [
+      {
+        "junction": "115",
+        "area_m2": 0.001,
+        "discharge_coeff": 0.75,
+        "ward": "Ward C"
+      },
+      {
+        "junction": "219",
+        "area_m2": 0.001,
+        "discharge_coeff": 0.75,
+        "ward": "Ward E"
+      },
+      {
+        "junction": "255",
+        "area_m2": 0.001,
+        "discharge_coeff": 0.75,
+        "ward": "Ward F"
+      }
+    ],
+    "night_window": "02:00-04:00, last simulated day",
+    "threshold": "flag if night inflow > baseline by 10% (~3.5 sd of simulated 2% meter noise on both readings)",
+    "total_leak_volume_m3_per_day": 5309.6,
+    "per_ward": {
+      "Ward A": {
+        "baseline_night_inflow_m3": 338.95,
+        "leak_night_inflow_m3": 340.4,
+        "true_excess_m3": 0.0,
+        "anomaly_pct": 0.43,
+        "flagged": false,
+        "contains_leak": false
+      },
+      "Ward B": {
+        "baseline_night_inflow_m3": 363.06,
+        "leak_night_inflow_m3": 371.11,
+        "true_excess_m3": 0.0,
+        "anomaly_pct": 2.22,
+        "flagged": false,
+        "contains_leak": false
+      },
+      "Ward C": {
+        "baseline_night_inflow_m3": 694.97,
+        "leak_night_inflow_m3": 873.48,
+        "true_excess_m3": 164.87,
+        "anomaly_pct": 25.69,
+        "flagged": true,
+        "contains_leak": true
+      },
+      "Ward D": {
+        "baseline_night_inflow_m3": 1072.37,
+        "leak_night_inflow_m3": 1148.39,
+        "true_excess_m3": 0.0,
+        "anomaly_pct": 7.09,
+        "flagged": false,
+        "contains_leak": false
+      },
+      "Ward E": {
+        "baseline_night_inflow_m3": 118.68,
+        "leak_night_inflow_m3": 272.97,
+        "true_excess_m3": 150.39,
+        "anomaly_pct": 130.0,
+        "flagged": true,
+        "contains_leak": true
+      },
+      "Ward F": {
+        "baseline_night_inflow_m3": 2491.05,
+        "leak_night_inflow_m3": 2611.93,
+        "true_excess_m3": 134.01,
+        "anomaly_pct": 4.85,
+        "flagged": false,
+        "contains_leak": true
+      }
+    },
+    "true_positives": [
+      "Ward C",
+      "Ward E"
+    ],
+    "false_positives": [],
+    "false_negatives": [
+      "Ward F"
+    ]
+  }
+}
