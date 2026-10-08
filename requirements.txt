@@ -1,3 +1,5 @@
 wntr
 pandas
 matplotlib
+scikit-learn
+pytest
