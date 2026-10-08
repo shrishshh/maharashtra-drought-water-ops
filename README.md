@@ -45,7 +45,9 @@ Real: village locations (OpenStreetMap, ODbL) and Census 2011 village population
 history, request dates, GPS traces and trip claims. The filling point (Tuljapur town)
 is an assumption. `village/engine.py` holds the JSON-in/JSON-out functions: need
 score, pluggable distance matrix (Amazon Location stub for Part D), OR-Tools routing,
-naive FCFS baseline, and rule-based fraud checks.
+naive FCFS baseline, and rule-based fraud checks. Only villages whose own source is dry (simulated)
+are tanker-eligible (assumption). `plan_fleet()` sweeps 6-40 tankers; an optional second
+filling point (Naldurg) can be enabled with `n_fill_points=2`.
 
 ## AI tools used
 

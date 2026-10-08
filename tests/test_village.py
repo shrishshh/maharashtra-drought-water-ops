@@ -90,6 +90,30 @@ def test_every_fraud_type_caught(data):
             assert c["injected_fraud"][0] + " " in reasons.get(c["claim_id"], ""), c
 
 
+def test_only_eligible_villages_get_water(data, results):
+    eligible = {v["id"] for v in data["villages"] if v["source_dry_sim"]}
+    for name, plan in results["plans"].items():
+        assert set(plan["litres_by_village"]) <= eligible, name
+        assert {u["village_id"] for u in plan["dropped_units"]} <= eligible, name
+
+
+def test_fills_happen_at_a_filling_point(data, results):
+    names = {f["name"] for f in data["fill_points"]}
+    for _, r in all_routes(results):
+        assert all(e["place"] in names for e in r["events"] if e["type"] == "fill")
+        assert not r["events"] or r["events"][0]["place"] == data["fill_points"][0]["name"]  # day starts at base
+
+
+def test_fleet_sweep(results):
+    fleet = results["fleet"]
+    by_n = {r["n_tankers"]: r for r in fleet["sweep"]}
+    assert set(fleet["sweep_sizes"]) <= set(by_n) and min(fleet["sweep_sizes"]) == 6 and max(fleet["sweep_sizes"]) == 40
+    assert by_n[40]["need_covered_pct"] > by_n[6]["need_covered_pct"]
+    a, b = fleet["min_tankers_every_high_need_one_load"], fleet["min_tankers_full_human_need"]
+    assert a is not None and by_n[a]["high_need_unserved"] == 0
+    assert b is None or by_n[b]["human_need_covered_pct"] == 100.0
+
+
 def test_distance_stub_is_marked():
     with pytest.raises(NotImplementedError):
         village.distance_matrix([{"lat": 18.0, "lon": 76.0}], {"distance_provider": "amazon_location"})
