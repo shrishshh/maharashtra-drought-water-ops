@@ -37,7 +37,7 @@ Wards (KMeans, 6 wards) and leaks are simulated on the sample network. Writes
 
 ```powershell
 .\.venv\Scripts\python.exe village\data_prep.py      # builds data/village/villages.json (--refresh re-downloads)
-.\.venv\Scripts\python.exe village\partC_run.py      # ~40 s (30 s OR-Tools time limit)
+.\.venv\Scripts\python.exe village\partC_run.py      # ~75 s (20 s OR-Tools limit + 46-solve fleet sweep on all cores)
 ```
 
 Real: village locations (OpenStreetMap, ODbL) and Census 2011 village population
