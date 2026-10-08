@@ -10,7 +10,9 @@ JSON-serialisable dicts (future Lambda handlers):
   need_assessment(payload, config)   need score + tanker loads, ranked
   distance_matrix(points, config)    pluggable: haversine x detour now, Amazon Location later
   plan_routes(payload, config)       OR-Tools multi-trip tanker routing with prize-collecting drops
+                                     (one or more filling points)
   naive_plan(payload, config)        first-come-first-served baseline
+  plan_fleet(payload, config)        sweep fleet size -> coverage + minimum tankers
   compare_plans(plans, ranked)       km, tanker-hours, litres, high-need villages unserved
   simulate_gps / build_claims        SIMULATED GPS traces and trip claims (+ injected frauds)
   detect_fraud(payload, config)      rule-based claim checks with reason strings
@@ -33,6 +35,10 @@ DEFAULT_CONFIG: dict = {
     # animal (cattle/buffalo), 10 L/day per small animal (sheep/goat).
     "large_animal_lpd": 35,
     "small_animal_lpd": 10,
+    # --- Eligibility. ASSUMPTION mirroring scarcity-village tanker supply: only
+    # villages whose own source has failed (source_dry_sim) get tankers. ---
+    "eligible_only_dry": True,
+    "human_only": False,  # True: need = drinking water only (20 lpcd), no livestock
     # --- Urgency ---
     "urgency_source_dry": 1.5,  # x1.5 if the village's own source is dry
     "urgency_per_day_waiting": 0.05,  # +5% per day since last tanker ...
@@ -44,12 +50,13 @@ DEFAULT_CONFIG: dict = {
     "fill_min": 20,
     "unload_min": 20,
     "shift_start": "07:00",
+    "n_fill_points": 1,  # use the first N of payload["fill_points"] (1 = Tuljapur only)
     # --- Distances ---
     "distance_provider": "haversine",  # "amazon_location" in Part D
     "detour_factor": 1.3,
     "speed_kmh": 30,
     # --- Solver ---
-    "solver_time_limit_s": 30,
+    "solver_time_limit_s": 20,  # same plan as 30 s in Part C; fits inside one API call
     "max_trips_per_tanker": 10,
     "penalty_scale": 100,  # drop penalty = scale x need_score x max(decay^k, floor) for the k-th load
     "penalty_decay": 0.6,  # later loads to the same village are worth less (first load matters most)
@@ -58,12 +65,18 @@ DEFAULT_CONFIG: dict = {
     "high_need_quantile": 0.75,  # top 25% by need score = "high-need"
     # --- Fraud detection ---
     "gps_interval_min": 1,
-    "gps_noise_m": 10,
+    "gps_noise_m": 30,
+    "gps_gap_trip_frac": 0.10,  # ~10% of trips lose GPS signal ...
+    "gps_gap_min": [2, 5],  # ... for 2-5 minutes
     "visit_radius_m": 300,
     "claim_window_min": 60,  # look for the GPS visit within +/- this of the claimed time
     "min_dwell_frac": 0.75,  # stop must last >= 75% of unload time
     "fill_dwell_frac": 0.5,  # a fill-point stop >= 50% of fill time counts as a refill
     "max_plausible_kmh": 60,
+    # --- Fleet sweep ---
+    "fleet_sizes": list(range(6, 41, 2)),
+    "fleet_probe_sizes": [1, 2, 3, 4, 5],  # only to locate threshold (a) if it is already met at 6
+    "fleet_solver_time_limit_s": 5,
 }
 
 
@@ -79,8 +92,9 @@ def need_assessment(payload: dict, config: dict | None = None) -> dict:
     cfg = _cfg(config)
     rows = []
     for v in payload["villages"]:
-        need = (v["population"] * cfg["human_lpcd"] + v["large_animals_sim"] * cfg["large_animal_lpd"]
-                + v["small_animals_sim"] * cfg["small_animal_lpd"])
+        need = v["population"] * cfg["human_lpcd"]
+        if not cfg["human_only"]:
+            need += v["large_animals_sim"] * cfg["large_animal_lpd"] + v["small_animals_sim"] * cfg["small_animal_lpd"]
         urgency = ((cfg["urgency_source_dry"] if v["source_dry_sim"] else 1.0)
                    * (1 + cfg["urgency_per_day_waiting"] * min(v["days_since_last_tanker_sim"], cfg["urgency_days_cap"])))
         rows.append({
@@ -90,14 +104,19 @@ def need_assessment(payload: dict, config: dict | None = None) -> dict:
             "loads_needed": math.ceil(need / cfg["tanker_capacity_l"]),
             "source_dry_sim": v["source_dry_sim"], "days_since_last_tanker_sim": v["days_since_last_tanker_sim"],
             "request_date_sim": v["request_date_sim"],
+            "eligible": bool(v["source_dry_sim"] or not cfg["eligible_only_dry"]),
         })
     rows.sort(key=lambda r: -r["need_score"])
-    cut = np.quantile([r["need_score"] for r in rows], cfg["high_need_quantile"])
+    elig = [r for r in rows if r["eligible"]]
+    cut = np.quantile([r["need_score"] for r in elig], cfg["high_need_quantile"]) if elig else 0
     for i, r in enumerate(rows):
         r["rank"] = i + 1
-        r["high_need"] = bool(r["need_score"] >= cut)
-    return {"ranked": rows, "total_need_l": sum(r["daily_need_l"] for r in rows),
-            "total_loads_needed": sum(r["loads_needed"] for r in rows)}
+        r["high_need"] = bool(r["eligible"] and r["need_score"] >= cut)  # top 25% of ELIGIBLE villages
+    return {"ranked": rows, "n_eligible": len(elig),
+            "total_need_l": sum(r["daily_need_l"] for r in elig),
+            "total_loads_needed": sum(r["loads_needed"] for r in elig),
+            "need_basis": "human only (20 lpcd)" if cfg["human_only"] else "human + livestock",
+            "eligibility": "source_dry_sim villages only (assumption)" if cfg["eligible_only_dry"] else "all villages"}
 
 
 # --------------------------------------------------------------------------
@@ -140,18 +159,31 @@ def distance_matrix(points: list[dict], config: dict | None = None) -> dict:
     return DISTANCE_PROVIDERS[cfg["distance_provider"]](points, cfg)
 
 
-def _locations(payload: dict) -> list[dict]:
-    """Location 0 = filling point, 1..n = villages in payload order."""
-    fp = payload["fill_point"]
-    return [{"lat": fp["lat"], "lon": fp["lon"], "name": fp["name"]}] + [
-        {"lat": v["lat"], "lon": v["lon"], "name": v["name"], "id": v["id"]} for v in payload["villages"]]
+def _fill_points(payload: dict, cfg: dict | None = None) -> list[dict]:
+    """Filling points in use: the first n_fill_points of payload["fill_points"]
+    (falls back to the single payload["fill_point"]). Index 0 is the tanker base."""
+    fps = payload.get("fill_points") or [payload["fill_point"]]
+    return fps[: (cfg or DEFAULT_CONFIG)["n_fill_points"]]
+
+
+def _locations(payload: dict, cfg: dict | None = None) -> list[dict]:
+    """Locations 0..F-1 = filling points (0 = base), F.. = villages in payload order."""
+    fills = [{"lat": f["lat"], "lon": f["lon"], "name": f["name"], "fill": True} for f in _fill_points(payload, cfg)]
+    return fills + [{"lat": v["lat"], "lon": v["lon"], "name": v["name"], "id": v["id"]} for v in payload["villages"]]
+
+
+def _n_fill(locs: list[dict]) -> int:
+    return sum(1 for l in locs if l.get("fill"))
 
 
 def _units(payload: dict, ranked: list[dict], cfg: dict) -> list[dict]:
-    """Split each village's need into tanker-load units (last unit may be partial)."""
-    loc_of = {v["id"]: i + 1 for i, v in enumerate(payload["villages"])}
+    """Split each ELIGIBLE village's need into tanker-load units (last unit may be partial)."""
+    nf = len(_fill_points(payload, cfg))
+    loc_of = {v["id"]: i + nf for i, v in enumerate(payload["villages"])}
     cap, units = cfg["tanker_capacity_l"], []
     for r in ranked:
+        if not r.get("eligible", True):
+            continue
         remaining = r["daily_need_l"]
         for k in range(r["loads_needed"]):
             litres = min(cap, remaining)
@@ -165,10 +197,11 @@ def _units(payload: dict, ranked: list[dict], cfg: dict) -> list[dict]:
 # Route bookkeeping shared by optimised + naive plans
 # --------------------------------------------------------------------------
 def _build_route(tanker: int, stops: list[dict], dm: dict, locs: list[dict], cfg: dict) -> dict:
-    """stops: [{"type": "fill"} | {"type": "deliver", loc, litres, unit_id, village_id}] (no start/end).
+    """stops: [{"type": "fill", loc} | {"type": "deliver", loc, litres, unit_id, village_id}] (no start/end).
+    The day starts with a fill at location 0 (base) and ends back at the base.
     Normalises (start with a fill, collapse repeated fills, drop trailing fills),
     computes times/km, and asserts capacity + working hours."""
-    seq = [{"type": "fill"}]
+    seq = [{"type": "fill", "loc": 0}]
     for s in stops:
         if s["type"] == "fill" and seq[-1]["type"] == "fill":
             continue
@@ -179,11 +212,11 @@ def _build_route(tanker: int, stops: list[dict], dm: dict, locs: list[dict], cfg
     events, t, km, prev, load, trips = [], 0, 0.0, 0, 0, 0
     cap = cfg["tanker_capacity_l"]
     for s in seq:
-        loc = 0 if s["type"] == "fill" else s["loc"]
+        loc = s.get("loc", 0)
         t += dm["minutes"][prev][loc]
         km += dm["km"][prev][loc]
         if s["type"] == "fill":
-            events.append({"type": "fill", "loc": 0, "place": locs[0]["name"], "arrive_min": t,
+            events.append({"type": "fill", "loc": loc, "place": locs[loc]["name"], "arrive_min": t,
                            "depart_min": t + cfg["fill_min"]})
             t += cfg["fill_min"]
             load, trips = 0, trips + 1
@@ -197,7 +230,7 @@ def _build_route(tanker: int, stops: list[dict], dm: dict, locs: list[dict], cfg
             t += cfg["unload_min"]
         prev = loc
     has_delivery = any(e["type"] == "deliver" for e in events)
-    if has_delivery:  # return to the filling point at the end of the day
+    if has_delivery:  # return to the base at the end of the day
         t += dm["minutes"][prev][0]
         km += dm["km"][prev][0]
     else:
@@ -231,10 +264,10 @@ def _plan_summary(name: str, routes: list[dict], units: list[dict], runtime: flo
 # Optimised plan (OR-Tools)
 # --------------------------------------------------------------------------
 def plan_routes(payload: dict, config: dict | None = None) -> dict:
-    """payload: {villages, fill_point, ranked?} -> optimised one-day plan.
+    """payload: {villages, fill_point(s), ranked?} -> optimised one-day plan.
 
-    Model: node 0 = filling point (start/end; tanker fills before leaving),
-    R optional refill nodes at the filling point (penalty 0), and one optional
+    Model: node 0 = base filling point (start/end; tanker fills before leaving),
+    R optional refill nodes at EACH filling point in use (penalty 0), and one optional
     node per tanker-load unit. A "Load" dimension counts litres delivered since
     the last fill (+litres at units, -capacity at refills with slack), so a
     trip never exceeds capacity. A "Time" dimension (service + travel) caps the
@@ -247,17 +280,20 @@ def plan_routes(payload: dict, config: dict | None = None) -> dict:
     cfg = _cfg(config)
     t0 = time.perf_counter()
     ranked = payload.get("ranked") or need_assessment(payload, cfg)["ranked"]
-    locs = _locations(payload)
+    locs = _locations(payload, cfg)
+    nf = _n_fill(locs)
     dm = distance_matrix(locs, cfg)
     units = _units(payload, ranked, cfg)
     cap = cfg["tanker_capacity_l"]
     n_veh = cfg["n_tankers"]
-    n_refill = n_veh * cfg["max_trips_per_tanker"]
+    n_refill = max(1, min(n_veh * cfg["max_trips_per_tanker"], len(units)))  # per filling point
 
     # node -> (loc, service_min, demand_l)
-    nodes = [(0, cfg["fill_min"], 0)] + [(0, cfg["fill_min"], -cap)] * n_refill + [
-        (u["loc"], cfg["unload_min"], u["litres"]) for u in units]
-    first_unit = 1 + n_refill
+    nodes = [(0, cfg["fill_min"], 0)]
+    for f in range(nf):
+        nodes += [(f, cfg["fill_min"], -cap)] * n_refill
+    nodes += [(u["loc"], cfg["unload_min"], u["litres"]) for u in units]
+    first_unit = 1 + nf * n_refill
     dist_m = [[int(round(d * 1000)) for d in row] for row in dm["km"]]
 
     manager = pywrapcp.RoutingIndexManager(len(nodes), n_veh, 0)
@@ -304,7 +340,7 @@ def plan_routes(payload: dict, config: dict | None = None) -> dict:
         while not routing.IsEnd(idx):
             n = manager.IndexToNode(idx)
             if n < first_unit:
-                stops.append({"type": "fill"})
+                stops.append({"type": "fill", "loc": nodes[n][0]})
             else:
                 u = units[n - first_unit]
                 stops.append({"type": "deliver", "loc": u["loc"], "litres": u["litres"],
@@ -312,9 +348,11 @@ def plan_routes(payload: dict, config: dict | None = None) -> dict:
             idx = solution.Value(routing.NextVar(idx))
         routes.append(_build_route(v, stops, dm, locs, cfg))
 
-    return _plan_summary("optimised (OR-Tools)", routes, units, time.perf_counter() - t0,
+    name = "optimised (OR-Tools)" + (f", {nf} filling points" if nf > 1 else "")
+    return _plan_summary(name, routes, units, time.perf_counter() - t0,
                          {"solver_objective": solution.ObjectiveValue(), "distance_provider": dm["provider"],
-                          "solver_time_limit_s": cfg["solver_time_limit_s"]})
+                          "solver_time_limit_s": cfg["solver_time_limit_s"],
+                          "fill_points": [l["name"] for l in locs[:nf]]})
 
 
 # --------------------------------------------------------------------------
@@ -324,11 +362,12 @@ def naive_plan(payload: dict, config: dict | None = None) -> dict:
     """Requests served strictly in request-date order (ties: village id); each
     load is its own trip (fill -> village -> back). The earliest-free tanker
     takes the next load; a tanker that cannot fit that trip in its day stops.
-    No skipping ahead in the queue."""
+    No skipping ahead in the queue. Uses the base filling point only."""
     cfg = _cfg(config)
     t0 = time.perf_counter()
     ranked = payload.get("ranked") or need_assessment(payload, cfg)["ranked"]
-    locs = _locations(payload)
+    cfg = {**cfg, "n_fill_points": 1}
+    locs = _locations(payload, cfg)
     dm = distance_matrix(locs, cfg)
     order = {r["id"]: (r["request_date_sim"], r["id"]) for r in ranked}
     units = sorted(_units(payload, ranked, cfg), key=lambda u: (order[u["village_id"]], u["k"]))
@@ -342,7 +381,7 @@ def naive_plan(payload: dict, config: dict | None = None) -> dict:
             trip = cfg["fill_min"] + dm["minutes"][0][u["loc"]] + cfg["unload_min"]
             back = dm["minutes"][u["loc"]][0]
             if free_at[k] + trip + back <= limit:
-                stops[k] += [{"type": "fill"}, {"type": "deliver", "loc": u["loc"], "litres": u["litres"],
+                stops[k] += [{"type": "fill", "loc": 0}, {"type": "deliver", "loc": u["loc"], "litres": u["litres"],
                                                 "unit_id": u["unit_id"], "village_id": u["village_id"]}]
                 free_at[k] += trip + back
                 placed = True
@@ -355,6 +394,8 @@ def naive_plan(payload: dict, config: dict | None = None) -> dict:
 
 
 def compare_plans(plans: list[dict], ranked: list[dict]) -> list[dict]:
+    """Metrics over ELIGIBLE villages (high-need = top 25% of eligible by score)."""
+    ranked = [r for r in ranked if r.get("eligible", True)]
     high = {r["id"] for r in ranked if r["high_need"]}
     need = {r["id"]: r["daily_need_l"] for r in ranked}
     rows = []
@@ -374,6 +415,51 @@ def compare_plans(plans: list[dict], ranked: list[dict]) -> list[dict]:
             "litres_per_km": round(sum(got.values()) / max(sum(r["km"] for r in p["routes"]), 1e-9), 1),
         })
     return rows
+
+
+def _fleet_job(job: dict) -> dict:
+    """One fleet-sweep point (top-level so it can run in a process pool / Lambda)."""
+    cfg = _cfg(job["config"])
+    need = need_assessment(job["payload"], cfg)
+    plan = plan_routes({**job["payload"], "ranked": need["ranked"]}, cfg)
+    row = compare_plans([plan], need["ranked"])[0]
+    return {"n_tankers": cfg["n_tankers"], "human_only": cfg["human_only"],
+            "need_covered_pct": row["need_covered_pct"], "high_need_unserved": row["high_need_unserved"],
+            "villages_served": row["villages_served"], "litres_delivered": row["litres_delivered"],
+            "units_dropped": len(plan["dropped_units"])}
+
+
+def plan_fleet(payload: dict, config: dict | None = None, mapper=map) -> dict:
+    """Sweep fleet size and report coverage; find the minimum tankers for
+      (a) every high-need eligible village gets >= 1 load (full need basis), and
+      (b) 100% of human drinking need (20 lpcd, no livestock) of eligible villages.
+    Each point is solved with fleet_solver_time_limit_s (shorter than a single
+    plan), so thresholds are heuristic upper bounds, not proven minima.
+    mapper(fn, jobs) can be builtin map, a process pool, or a Step Functions Map.
+    """
+    cfg = _cfg(config)
+    sweep = cfg["fleet_sizes"]
+    sizes = sorted(set(cfg["fleet_probe_sizes"]) | set(sweep))
+    base = {**cfg, "solver_time_limit_s": cfg["fleet_solver_time_limit_s"]}
+    jobs = [{"payload": payload, "config": {**base, "n_tankers": n, "human_only": h}}
+            for h in (False, True) for n in sizes]
+    t0 = time.perf_counter()
+    res = list(mapper(_fleet_job, jobs))
+    full = {r["n_tankers"]: r for r in res if not r["human_only"]}
+    human = {r["n_tankers"]: r for r in res if r["human_only"]}
+    min_a = next((n for n in sizes if full[n]["high_need_unserved"] == 0), None)
+    min_b = next((n for n in sizes if human[n]["units_dropped"] == 0), None)
+    rows = [{"n_tankers": n, "need_covered_pct": full[n]["need_covered_pct"],
+             "high_need_unserved": full[n]["high_need_unserved"], "villages_served": full[n]["villages_served"],
+             "human_need_covered_pct": human[n]["need_covered_pct"]} for n in sizes]
+    return {
+        "sweep": rows, "sweep_sizes": sweep, "probe_sizes": cfg["fleet_probe_sizes"],
+        "min_tankers_every_high_need_one_load": min_a,
+        "min_tankers_full_human_need": min_b,
+        "solver_time_limit_s_per_point": cfg["fleet_solver_time_limit_s"],
+        "runtime_s": round(time.perf_counter() - t0, 1),
+        "note": "thresholds from a heuristic solve per fleet size (upper bounds); None = not reached in sweep",
+    }
 
 
 # --------------------------------------------------------------------------
@@ -414,7 +500,8 @@ def _sample(legs: list[dict], cfg: dict, rng) -> list[list[float]]:
 
 def simulate_gps_and_claims(plan: dict, payload: dict, config: dict | None = None, seed: int = 99) -> dict:
     """SIMULATED: 1-min GPS traces for the plan + one delivery claim per stop,
-    then inject 5 fraudulent claims (ground truth kept in each claim's
+    with gps_noise_m noise and 2-5 min signal gaps on ~gps_gap_trip_frac of
+    trips, then inject 5 fraudulent claims (ground truth kept in each claim's
     "injected_fraud" field, which the detector never reads):
       a  x2  claim at a village the tanker never went near
       b      real stop, but the tanker left after 4 min (GPS altered)
@@ -423,7 +510,7 @@ def simulate_gps_and_claims(plan: dict, payload: dict, config: dict | None = Non
     """
     cfg = _cfg(config)
     rng = np.random.default_rng(seed)
-    locs = _locations(payload)
+    locs = _locations(payload, cfg)
     dm = distance_matrix(locs, cfg)
     routes = [r for r in plan["routes"] if r["events"]]
     itineraries = {r["tanker"]: _itinerary(r, locs, dm, cfg) for r in routes}
@@ -474,6 +561,18 @@ def simulate_gps_and_claims(plan: dict, payload: dict, config: dict | None = Non
 
     traces = {t: _sample(legs, cfg, rng) for t, legs in itineraries.items()}
 
+    # Signal gaps: ~gps_gap_trip_frac of trips lose 2-5 min of points somewhere in the trip.
+    gaps = []
+    lo_gap, hi_gap = cfg["gps_gap_min"]
+    for r in routes:
+        fills = [e for e in r["events"] if e["type"] == "fill"] + [{"arrive_min": r["end_min"]}]
+        for a, b in zip(fills, fills[1:]):
+            if rng.random() < cfg["gps_gap_trip_frac"]:
+                length = int(rng.integers(lo_gap, hi_gap + 1))
+                start = int(rng.integers(a["arrive_min"], max(a["arrive_min"] + 1, b["arrive_min"] - length)))
+                traces[r["tanker"]] = [p for p in traces[r["tanker"]] if not start <= p[0] < start + length]
+                gaps.append({"tanker": r["tanker"], "start_min": start, "minutes": length})
+
     # (a) x2: phantom deliveries to villages far from the tanker's trace.
     def far_village(tanker, t_min, min_km=8.0):
         pts = [p for p in traces[tanker] if abs(p[0] - t_min) <= cfg["claim_window_min"] + 5]
@@ -501,7 +600,8 @@ def simulate_gps_and_claims(plan: dict, payload: dict, config: dict | None = Non
     claims.sort(key=lambda c: (c["tanker"], c["claimed_min"]))
     for i, c in enumerate(claims):
         c["claim_id"] = f"C{i + 1:03d}"
-    return {"label": "SIMULATED GPS traces and trip claims", "traces": traces, "claims": claims}
+    return {"label": "SIMULATED GPS traces and trip claims", "traces": traces, "claims": claims, "gaps": gaps,
+            "gps_noise_m": cfg["gps_noise_m"], "seed": seed}
 
 
 # --------------------------------------------------------------------------
@@ -533,7 +633,7 @@ def _runs_within(trace: list, place: dict, radius_m: float, t_lo: float, t_hi: f
 
 
 def detect_fraud(payload: dict, config: dict | None = None) -> dict:
-    """payload: {claims, traces, villages, fill_point} -> per-claim flags with reasons.
+    """payload: {claims, traces, villages, fill_point(s)} -> per-claim flags with reasons.
 
     Rules (per tanker, claims in time order):
       a no_gps_visit     no GPS point within visit_radius_m of the village in +/- claim_window_min
@@ -547,7 +647,7 @@ def detect_fraud(payload: dict, config: dict | None = None) -> dict:
     """
     cfg = _cfg(config)
     vill = {v["id"]: v for v in payload["villages"]}
-    fp = payload["fill_point"]
+    fps = payload.get("fill_points") or [payload["fill_point"]]
     win, r_m = cfg["claim_window_min"], cfg["visit_radius_m"]
     min_dwell = cfg["min_dwell_frac"] * cfg["unload_min"]
     cap = cfg["tanker_capacity_l"]
@@ -558,7 +658,8 @@ def detect_fraud(payload: dict, config: dict | None = None) -> dict:
 
     for tanker, cl in by_tanker.items():
         trace = payload["traces"].get(tanker, [])
-        fills = [r for r in _runs_within(trace, fp, r_m, -1, 1e9) if r[1] - r[0] + 1 >= cfg["fill_dwell_frac"] * cfg["fill_min"]]
+        fills = sorted(r for fp in fps for r in _runs_within(trace, fp, r_m, -1, 1e9)
+                       if r[1] - r[0] + 1 >= cfg["fill_dwell_frac"] * cfg["fill_min"])
         litres_since_fill, last_verified, last_fill_end = 0, None, -1
         for c in sorted(cl, key=lambda x: x["claimed_min"]):
             v = vill[c["village_id"]]

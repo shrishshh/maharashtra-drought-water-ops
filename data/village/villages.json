@@ -3,7 +3,8 @@
   "sources": {
     "village_locations": "OpenStreetMap via Overpass API, place=village in OSM relation 10349973 (Tuljapur taluka). (c) OpenStreetMap contributors, ODbL.",
     "population": "Census 2011 village totals, Tuljapur sub-district 04241 (Osmanabad district), via https://www.census2011.co.in/data/subdistrict/4241-tuljapur-osmanabad-maharashtra.html",
-    "fill_point": "OSM place=town 'Tuljapur' (taluka HQ) - ASSUMED filling point, not confirmed"
+    "fill_point": "OSM place=town 'Tuljapur' (taluka HQ) - ASSUMED filling point, not confirmed",
+    "fill_points": "Tuljapur (base) + Naldurg (optional second), OSM place=town - ASSUMED, not confirmed"
   },
   "simulated_fields": [
     "large_animals_sim",
@@ -40,13 +41,22 @@
       "Khotachiwadi"
     ]
   },
-  "fill_point": {
-    "name": "Tuljapur",
-    "lat": 18.008662,
-    "lon": 76.070792,
-    "osm_node_id": 245642809,
-    "note": "ASSUMED filling point (taluka HQ town)"
-  },
+  "fill_points": [
+    {
+      "name": "Tuljapur",
+      "lat": 18.008662,
+      "lon": 76.070792,
+      "osm_node_id": 245642809,
+      "note": "ASSUMED tanker base / filling point (taluka HQ town)"
+    },
+    {
+      "name": "Naldurg",
+      "lat": 17.814986,
+      "lon": 76.278965,
+      "osm_node_id": 245642153,
+      "note": "ASSUMED optional second filling point"
+    }
+  ],
   "villages": [
     {
       "id": "V01",
@@ -592,5 +602,12 @@
       "days_since_last_tanker_sim": 1,
       "request_date_sim": "2026-10-02"
     }
-  ]
+  ],
+  "fill_point": {
+    "name": "Tuljapur",
+    "lat": 18.008662,
+    "lon": 76.070792,
+    "osm_node_id": 245642809,
+    "note": "ASSUMED tanker base / filling point (taluka HQ town)"
+  }
 }

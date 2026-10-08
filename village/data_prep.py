@@ -9,8 +9,9 @@ REAL data:
     reproduction of the Census 2011 PCA; the official PCA xlsx could not be
     downloaded). Raw page: data/village/census2011_tuljapur_raw.html
     Joined to OSM by fuzzy name match (match rate printed + saved).
-  - Filling point: Tuljapur town (taluka HQ) from OSM. ASSUMPTION: chosen as a
-    plausible tanker filling point, not a confirmed one.
+  - Filling points: Tuljapur town (taluka HQ, tanker base) and, optionally,
+    Naldurg town, both from OSM. ASSUMPTION: plausible tanker filling points,
+    not confirmed ones.
 
 SIMULATED (fixed seed, every such field ends in "_sim"):
   livestock counts, local-source-dry status, days since last tanker, request date.
@@ -55,7 +56,7 @@ DEMO_MATCH_THRESHOLD = 0.90  # only high-confidence matches are used in the demo
 N_DEMO_VILLAGES = 32
 SEED = 2026
 REQUEST_DAY = dt.date(2026, 10, 8)
-FILL_POINT_NAME = "Tuljapur"
+FILL_POINT_NAMES = ["Tuljapur", "Naldurg"]  # [base, optional second filling point]
 
 
 def fetch(refresh: bool) -> None:
@@ -92,7 +93,7 @@ def main() -> None:
 
     elements = json.loads(OSM_RAW.read_text(encoding="utf-8"))["elements"]
     osm = [e for e in elements if e["tags"].get("place") == "village" and e["tags"].get("name")]
-    town = next(e for e in elements if e["tags"].get("place") == "town" and e["tags"].get("name") == FILL_POINT_NAME)
+    towns = {e["tags"]["name"]: e for e in elements if e["tags"].get("place") == "town"}
 
     html = CENSUS_RAW.read_text(encoding="utf-8", errors="replace")
     rows = re.findall(r'href="/data/village/(\d+)-[^"]*">([^<]+)</a></td>\s*<td>[^<]*</td>\s*<td>([\d,]+)</td>', html)
@@ -147,6 +148,7 @@ def main() -> None:
                                  "(Tuljapur taluka). (c) OpenStreetMap contributors, ODbL.",
             "population": f"Census 2011 village totals, Tuljapur sub-district 04241 (Osmanabad district), via {CENSUS_URL}",
             "fill_point": "OSM place=town 'Tuljapur' (taluka HQ) - ASSUMED filling point, not confirmed",
+            "fill_points": "Tuljapur (base) + Naldurg (optional second), OSM place=town - ASSUMED, not confirmed",
         },
         "simulated_fields": ["large_animals_sim", "small_animals_sim", "source_dry_sim",
                              "days_since_last_tanker_sim", "request_date_sim"],
@@ -156,10 +158,13 @@ def main() -> None:
             "match_rate": round(len(matches) / len(osm), 3), "threshold": MATCH_THRESHOLD,
             "demo_uses_threshold": DEMO_MATCH_THRESHOLD, "unmatched_osm_names": unmatched,
         },
-        "fill_point": {"name": FILL_POINT_NAME, "lat": round(town["lat"], 6), "lon": round(town["lon"], 6),
-                       "osm_node_id": town["id"], "note": "ASSUMED filling point (taluka HQ town)"},
+        "fill_points": [
+            {"name": n, "lat": round(towns[n]["lat"], 6), "lon": round(towns[n]["lon"], 6), "osm_node_id": towns[n]["id"],
+             "note": "ASSUMED " + ("tanker base / filling point (taluka HQ town)" if i == 0 else "optional second filling point")}
+            for i, n in enumerate(FILL_POINT_NAMES)],
         "villages": villages,
     }
+    out["fill_point"] = out["fill_points"][0]  # backwards compatible single filling point
     OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Saved {OUT} with {len(villages)} villages")
 
