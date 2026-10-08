@@ -20,6 +20,19 @@ Runs on the EPA Net3 sample network (`data/networks/Net3.inp`), a representative
 sample network, **not** a real Maharashtra network. Writes `outputs/partA_summary.csv`
 and `outputs/partA_maps.png`.
 
+## Part B - BLUNT vs FAIR cut + leak zones (SIMULATED)
+
+```powershell
+.\.venv\Scripts\python.exe city\partB_run.py     # ~5 min on 15 workers
+.\.venv\Scripts\python.exe -m pytest tests -q   # run after partB_run.py
+```
+
+`city/engine.py` holds the pure, JSON-in/JSON-out hydraulic functions (future Lambda
+handlers); `evaluate_candidate()` is one FAIR plan (a future Step Functions Map job).
+Wards (KMeans, 6 wards) and leaks are simulated on the sample network. Writes
+`outputs/wards.json`, `outputs/partB_results.json`, `outputs/partB_compare.png`,
+`outputs/partB_leaks.png`.
+
 ## AI tools used
 
 - Claude Code (Anthropic) - code generation, debugging, and documentation.
