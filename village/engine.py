@@ -52,7 +52,12 @@ DEFAULT_CONFIG: dict = {
     "shift_start": "07:00",
     "n_fill_points": 1,  # use the first N of payload["fill_points"] (1 = Tuljapur only)
     # --- Distances ---
-    "distance_provider": "haversine",  # "amazon_location" in Part D
+    "distance_provider": "haversine",  # | "cache" (precomputed Amazon Location matrix) | "amazon_location" (billed)
+    "aws_region": "ap-south-1",
+    "location_travel_mode": "Truck",  # Core pricing bucket (no toll calculation)
+    "location_duration_factor": 1.0,  # scale service durations (e.g. slower loaded tankers)
+    # AWS Service Terms 82.4(a)(i): route results may be cached for up to 30 days (HERE/Esri providers)
+    "route_cache_days": 30,
     "detour_factor": 1.3,
     "speed_kmh": 30,
     # --- Solver ---
@@ -138,25 +143,109 @@ def _haversine_matrix(points: list[dict], cfg: dict) -> dict:
 
 
 def _amazon_location_matrix(points: list[dict], cfg: dict) -> dict:
-    # ------------------------------------------------------------------
-    # STUB - Part D: Amazon Location Service route matrix.
-    # Plan: boto3 client("geo-routes", region "ap-south-1").calculate_route_matrix(
-    #   Origins=[{"Position": [lon, lat]}...], Destinations=[...same...],
-    #   TravelMode="Truck", RoutingBoundary={"Unbounded": True})
-    # -> RouteMatrix[i][j]["Distance"] (m) / ["Duration"] (s); convert to
-    # km / ceil(minutes) and return the same dict shape as _haversine_matrix.
-    # Large inputs need batching to the API's origin/destination limits.
-    # ------------------------------------------------------------------
-    raise NotImplementedError("Amazon Location route matrix is plugged in during Part D")
+    """Road distances from Amazon Location Service Routes V2 (geo-routes CalculateRouteMatrix).
+
+    BILLED per origin x destination pair (Core bucket for Car/Truck), so call it
+    ONCE via scripts/build_route_matrix.py and cache the result (see
+    set_distance_cache / provider "cache"). A RoutingBoundary bounding box is
+    used because Unbounded requests are capped at 15 origins / 100 pairs;
+    with a geometry boundary a request takes up to 500 x 500 points.
+    Cells the service cannot route fall back to haversine and are counted.
+    """
+    import boto3
+
+    if len(points) > 500:
+        raise ValueError("more than 500 points: batch the matrix")
+    client = boto3.client("geo-routes", region_name=cfg["aws_region"])
+    pad = 0.25  # degrees (~25 km) around the points so detours stay inside the boundary
+    lats, lons = [p["lat"] for p in points], [p["lon"] for p in points]
+    resp = client.calculate_route_matrix(
+        Origins=[{"Position": [p["lon"], p["lat"]]} for p in points],
+        Destinations=[{"Position": [p["lon"], p["lat"]]} for p in points],
+        TravelMode=cfg["location_travel_mode"],
+        RoutingBoundary={"Geometry": {"BoundingBox": [min(lons) - pad, min(lats) - pad,
+                                                      max(lons) + pad, max(lats) + pad]}},
+    )
+    fallback = _haversine_matrix(points, cfg)
+    km, minutes, failed = [], [], 0
+    for i, row in enumerate(resp["RouteMatrix"]):
+        km.append([]), minutes.append([])
+        for j, cell in enumerate(row):
+            if i == j:
+                km[i].append(0.0), minutes[i].append(0)
+            elif cell.get("Error") or "Distance" not in cell:
+                failed += 1
+                km[i].append(fallback["km"][i][j]), minutes[i].append(fallback["minutes"][i][j])
+            else:
+                km[i].append(round(cell["Distance"] / 1000, 3))
+                minutes[i].append(math.ceil(cell["Duration"] / 60 * cfg["location_duration_factor"]))
+    return {"provider": f"Amazon Location Routes V2 ({cfg['location_travel_mode']}, "
+                        f"duration x{cfg['location_duration_factor']}); {failed} cells fell back to haversine",
+            "km": km, "minutes": minutes, "failed_cells": failed,
+            "pricing_bucket": resp.get("ResponseMetadata", {}).get("HTTPHeaders", {}).get("x-amz-geo-pricing-bucket")}
 
 
-DISTANCE_PROVIDERS = {"haversine": _haversine_matrix, "amazon_location": _amazon_location_matrix}
+_DISTANCE_CACHE: dict | None = None
+
+
+def _point_key(p: dict) -> str:
+    return f"{p['lat']:.5f},{p['lon']:.5f}"
+
+
+def set_distance_cache(cache: dict | None) -> None:
+    """Install a precomputed matrix {points: [{lat, lon, ...}], km, minutes, provider}
+    (e.g. loaded from S3) for the "cache" provider."""
+    global _DISTANCE_CACHE
+    _DISTANCE_CACHE = cache
+
+
+def _cached_matrix(points: list[dict], cfg: dict) -> dict:
+    """Sub-matrix of the installed cache for these points (looked up by coordinates)."""
+    if _DISTANCE_CACHE is None:
+        raise LookupError("no distance cache installed")
+    expires = _DISTANCE_CACHE.get("expires_at")
+    if expires and time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()) > expires:
+        raise LookupError(f"cached matrix expired {expires} (AWS Service Terms allow caching route results "
+                          "for up to 30 days); rebuild it")
+    index = {_point_key(p): i for i, p in enumerate(_DISTANCE_CACHE["points"])}
+    try:
+        ids = [index[_point_key(p)] for p in points]
+    except KeyError as exc:
+        raise LookupError(f"point {exc} not in the cached matrix") from exc
+    return {"provider": "cached: " + _DISTANCE_CACHE["provider"],
+            "km": [[_DISTANCE_CACHE["km"][i][j] for j in ids] for i in ids],
+            "minutes": [[_DISTANCE_CACHE["minutes"][i][j] for j in ids] for i in ids]}
+
+
+DISTANCE_PROVIDERS = {"haversine": _haversine_matrix, "amazon_location": _amazon_location_matrix,
+                      "cache": _cached_matrix}
 
 
 def distance_matrix(points: list[dict], config: dict | None = None) -> dict:
-    """points: [{lat, lon}, ...] -> {provider, km[i][j], minutes[i][j]} (minutes are integers, rounded up)."""
+    """points: [{lat, lon}, ...] -> {provider, km[i][j], minutes[i][j]} (minutes are integers, rounded up).
+    The "cache" provider falls back to haversine (and says so) if the cache is
+    missing or does not cover the points; "amazon_location" errors are raised."""
     cfg = _cfg(config)
+    if cfg["distance_provider"] == "cache":
+        try:
+            return _cached_matrix(points, cfg)
+        except LookupError as exc:
+            out = _haversine_matrix(points, cfg)
+            out["provider"] += f" (fallback: {exc})"
+            return out
     return DISTANCE_PROVIDERS[cfg["distance_provider"]](points, cfg)
+
+
+def build_distance_cache(payload: dict, config: dict | None = None) -> dict:
+    """Matrix over ALL fill points + villages in the payload (one billed call when
+    the provider is amazon_location), in the shape set_distance_cache() expects."""
+    cfg = _cfg(config)
+    points = [{"lat": f["lat"], "lon": f["lon"], "name": f["name"]} for f in payload["fill_points"]] + [
+        {"lat": v["lat"], "lon": v["lon"], "name": v["name"], "id": v["id"]} for v in payload["villages"]]
+    m = DISTANCE_PROVIDERS[cfg["distance_provider"]](points, cfg)
+    now = time.time()
+    return {"points": points, **m, "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)),
+            "expires_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now + cfg["route_cache_days"] * 86400))}
 
 
 def _fill_points(payload: dict, cfg: dict | None = None) -> list[dict]:
@@ -299,21 +388,17 @@ def plan_routes(payload: dict, config: dict | None = None) -> dict:
     manager = pywrapcp.RoutingIndexManager(len(nodes), n_veh, 0)
     routing = pywrapcp.RoutingModel(manager)
 
-    def dist_cb(i, j):
-        a, b = manager.IndexToNode(i), manager.IndexToNode(j)
-        extra = cfg["refill_arc_cost_m"] if 1 <= b < first_unit else 0
-        return dist_m[nodes[a][0]][nodes[b][0]] + extra
+    # Node-level matrices evaluated in C++ (RegisterTransitMatrix) rather than
+    # Python callbacks: the same costs, but many more local-search moves per
+    # second, which matters on slower CPUs (Docker, Lambda) under a time limit.
+    loc = [n[0] for n in nodes]
+    refill_extra = [cfg["refill_arc_cost_m"] if 1 <= b < first_unit else 0 for b in range(len(nodes))]
+    dist_nodes = [[dist_m[loc[a]][loc[b]] + refill_extra[b] for b in range(len(nodes))] for a in range(len(nodes))]
+    time_nodes = [[nodes[a][1] + dm["minutes"][loc[a]][loc[b]] for b in range(len(nodes))] for a in range(len(nodes))]
 
-    def time_cb(i, j):
-        a, b = manager.IndexToNode(i), manager.IndexToNode(j)
-        return nodes[a][1] + dm["minutes"][nodes[a][0]][nodes[b][0]]
-
-    def demand_cb(i):
-        return nodes[manager.IndexToNode(i)][2]
-
-    routing.SetArcCostEvaluatorOfAllVehicles(routing.RegisterTransitCallback(dist_cb))
-    routing.AddDimension(routing.RegisterTransitCallback(time_cb), 0, cfg["max_hours"] * 60, True, "Time")
-    routing.AddDimension(routing.RegisterUnaryTransitCallback(demand_cb), cap, cap, True, "Load")
+    routing.SetArcCostEvaluatorOfAllVehicles(routing.RegisterTransitMatrix(dist_nodes))
+    routing.AddDimension(routing.RegisterTransitMatrix(time_nodes), 0, cfg["max_hours"] * 60, True, "Time")
+    routing.AddDimension(routing.RegisterUnaryTransitVector([n[2] for n in nodes]), cap, cap, True, "Load")
     load = routing.GetDimensionOrDie("Load")
 
     for n in range(1, first_unit):

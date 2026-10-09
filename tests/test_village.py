@@ -111,6 +111,41 @@ def test_fleet_sweep(results):
     assert b is None or by_n[b]["human_need_covered_pct"] == 100.0
 
 
-def test_distance_stub_is_marked():
-    with pytest.raises(NotImplementedError):
-        village.distance_matrix([{"lat": 18.0, "lon": 76.0}], {"distance_provider": "amazon_location"})
+PTS = [{"lat": 18.0, "lon": 76.0}, {"lat": 18.1, "lon": 76.1}, {"lat": 17.9, "lon": 76.2}]
+
+
+def test_distance_cache_lookup_and_fallback():
+    cache = {"points": PTS, "provider": "test", "km": [[0, 1, 2], [1, 0, 3], [2, 3, 0]],
+             "minutes": [[0, 10, 20], [10, 0, 30], [20, 30, 0]]}
+    try:
+        village.set_distance_cache(cache)
+        sub = village.distance_matrix([PTS[2], PTS[0]], {"distance_provider": "cache"})
+        assert sub["km"] == [[0, 2], [2, 0]] and sub["minutes"] == [[0, 20], [20, 0]]
+        missing = village.distance_matrix([PTS[0], {"lat": 1.0, "lon": 1.0}], {"distance_provider": "cache"})
+        assert "fallback" in missing["provider"]  # haversine, and it says so
+        village.set_distance_cache({**cache, "expires_at": "2000-01-01T00:00:00Z"})
+        expired = village.distance_matrix(PTS, {"distance_provider": "cache"})
+        assert "expired" in expired["provider"]  # never use route results past the 30-day cache limit
+    finally:
+        village.set_distance_cache(None)
+
+
+def test_amazon_location_matrix_parsing(monkeypatch):
+    """No network: a fake geo-routes client checks the request and returns a canned matrix."""
+    calls = []
+
+    class FakeClient:
+        def calculate_route_matrix(self, **kw):
+            calls.append(kw)
+            n = len(kw["Origins"])
+            rows = [[{"Distance": 1000 * (i + j), "Duration": 60 * (i + j) + 1} for j in range(n)] for i in range(n)]
+            rows[0][2] = {"Error": "NoMatch"}
+            return {"RouteMatrix": rows, "ErrorCount": 1}
+
+    import boto3
+    monkeypatch.setattr(boto3, "client", lambda service, region_name=None: FakeClient())
+    m = village.distance_matrix(PTS, {"distance_provider": "amazon_location"})
+    assert len(calls) == 1 and "BoundingBox" in calls[0]["RoutingBoundary"]["Geometry"]
+    assert calls[0]["Origins"][0]["Position"] == [76.0, 18.0]  # [lon, lat]
+    assert m["km"][1][2] == 3.0 and m["minutes"][1][2] == 4  # 181 s -> ceil 4 min
+    assert m["failed_cells"] == 1 and m["km"][0][2] > 0  # error cell filled from haversine
