@@ -22,3 +22,9 @@ temp.inp
 .DS_Store
 Thumbs.db
 .vscode/
+
+# AWS SAM build output and deploy outputs (API URL, bucket name) - local only
+backend/.aws-sam/
+backend/deploy_outputs.json
+# Amazon Location route matrix: may only be cached for 30 days (AWS Service Terms 82.4(a)(i)); never commit
+data/village/route_matrix*.json
