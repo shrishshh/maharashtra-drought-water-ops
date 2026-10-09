@@ -4,7 +4,7 @@ DATA: Tuljapur taluka, Dharashiv - real village locations (OSM) and Census 2011
 population; livestock, source status, requests, trips and GPS are SIMULATED.
 
 Run from repo root (after village/data_prep.py):
-    .venv\\Scripts\\python.exe village\\partC_run.py
+    .venv\\Scripts\\python.exe -m village.partC_run
 Outputs: outputs/partC_results.json, outputs/partC_gps_sim.json,
          outputs/partC_routes.png, outputs/partC_naive_vs_opt.png, outputs/partC_fraud.png,
          outputs/partC_fleet.png
@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.lines import Line2D
 
-import engine
+from village import engine
 
 REPO = Path(__file__).resolve().parents[1]
 DATA = REPO / "data" / "village" / "villages.json"

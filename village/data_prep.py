@@ -16,7 +16,7 @@ REAL data:
 SIMULATED (fixed seed, every such field ends in "_sim"):
   livestock counts, local-source-dry status, days since last tanker, request date.
 
-Run from repo root:  .venv\\Scripts\\python.exe village\\data_prep.py [--refresh]
+Run from repo root:  .venv\\Scripts\\python.exe -m village.data_prep [--refresh]
 """
 
 import argparse

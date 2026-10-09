@@ -3,7 +3,7 @@
 NETWORK: representative sample network (EPA Net3), not a real Maharashtra network.
 Wards, leaks, meter noise and all results are SIMULATED.
 
-Run from repo root:  .venv\\Scripts\\python.exe city\\partB_run.py
+Run from repo root:  .venv\\Scripts\\python.exe -m city.partB_run
 Outputs: outputs/wards.json, outputs/partB_results.json,
          outputs/partB_compare.png, outputs/partB_leaks.png
 """
@@ -24,7 +24,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
 from scipy.spatial import ConvexHull
 
-import engine
+from city import engine
 
 OUT_DIR = engine.REPO / "outputs"
 LABEL = engine.NETWORK_LABEL

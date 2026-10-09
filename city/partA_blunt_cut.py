@@ -11,7 +11,7 @@ script:
   3. falls back to the same throttle on both source mains (lever b, BLUNT).
   4. Saves outputs/partA_summary.csv and outputs/partA_maps.png.
 
-Run from repo root:  .venv\\Scripts\\python.exe city\\partA_blunt_cut.py
+Run from repo root:  .venv\\Scripts\\python.exe -m city.partA_blunt_cut
 """
 
 import matplotlib
@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import wntr
 
-import engine
+from city import engine
 
 OUT_DIR = engine.REPO / "outputs"
 NETWORK_LABEL = "Representative sample network (EPA Net3), not a real Maharashtra network - SIMULATED"

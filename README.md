@@ -13,7 +13,7 @@ python -m venv .venv          # Python 3.12
 ## Part A - City engine proof of concept (SIMULATED)
 
 ```powershell
-.\.venv\Scripts\python.exe city\partA_blunt_cut.py
+.\.venv\Scripts\python.exe -m city.partA_blunt_cut
 ```
 
 Runs on the EPA Net3 sample network (`data/networks/Net3.inp`), a representative
@@ -23,7 +23,7 @@ and `outputs/partA_maps.png`.
 ## Part B - BLUNT vs FAIR cut + leak zones (SIMULATED)
 
 ```powershell
-.\.venv\Scripts\python.exe city\partB_run.py     # ~5 min on 15 workers
+.\.venv\Scripts\python.exe -m city.partB_run     # ~5 min on 15 workers
 .\.venv\Scripts\python.exe -m pytest tests -q   # run after partB_run.py
 ```
 
@@ -36,8 +36,8 @@ Wards (KMeans, 6 wards) and leaks are simulated on the sample network. Writes
 ## Part C - Village tanker planner (Tuljapur taluka, Dharashiv)
 
 ```powershell
-.\.venv\Scripts\python.exe village\data_prep.py      # builds data/village/villages.json (--refresh re-downloads)
-.\.venv\Scripts\python.exe village\partC_run.py      # ~75 s (20 s OR-Tools limit + 46-solve fleet sweep on all cores)
+.\.venv\Scripts\python.exe -m village.data_prep      # builds data/village/villages.json (--refresh re-downloads)
+.\.venv\Scripts\python.exe -m village.partC_run      # ~75 s (20 s OR-Tools limit + 46-solve fleet sweep on all cores)
 ```
 
 Real: village locations (OpenStreetMap, ODbL) and Census 2011 village population

@@ -3,17 +3,14 @@
 Route and fraud tests read outputs from village/partC_run.py; run it first.
 """
 
-import importlib.util
 import json
 from pathlib import Path
 
 import pytest
 
+from village import engine as village
+
 REPO = Path(__file__).resolve().parents[1]
-# Load by path under a unique name: city/ and village/ both have an engine.py.
-_spec = importlib.util.spec_from_file_location("village_engine", REPO / "village" / "engine.py")
-village = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(village)
 
 DATA = REPO / "data" / "village" / "villages.json"
 RESULTS = REPO / "outputs" / "partC_results.json"
