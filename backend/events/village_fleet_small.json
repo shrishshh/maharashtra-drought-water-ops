@@ -1,0 +1,1 @@
+{"type": "village_fleet", "params": {"fleet_sizes": [6, 10], "fleet_probe_sizes": [], "fleet_solver_time_limit_s": 3, "distance_provider": "haversine"}}

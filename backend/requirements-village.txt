@@ -1,0 +1,4 @@
+# Village worker image (OR-Tools). Versions pinned to the local dev environment.
+ortools==9.15.6755
+numpy==2.5.3
+protobuf==6.33.6

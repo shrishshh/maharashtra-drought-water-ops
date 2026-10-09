@@ -1,0 +1,14 @@
+# Docker build context is the repo root; send only what the images need (allowlist).
+**
+!backend/requirements-city.txt
+!backend/requirements-village.txt
+!backend/src/
+!city/
+!village/
+!data/networks/
+!data/village/villages.json
+!outputs/wards.json
+!outputs/partB_results.json
+!outputs/partC_results.json
+**/__pycache__
+**/*.pyc

@@ -1,0 +1,1 @@
+{"type": "village_plan", "params": {"n_tankers": 6, "filling_points": ["Tuljapur", "Naldurg"], "distance_provider": "haversine", "solver_time_limit_s": 20}}
