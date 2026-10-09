@@ -20,3 +20,5 @@ fail_on_empty_changeset = false
 resolve_s3 = true
 resolve_image_repos = true
 tags = "project=\"jalnyay\""
+# CORS: only the Amplify site may call the API from a browser (Part E)
+parameter_overrides = "AllowedOrigins=\"https://main.dwnal659uai38.amplifyapp.com\""
