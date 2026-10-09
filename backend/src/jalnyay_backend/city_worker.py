@@ -55,6 +55,10 @@ def _throttles(params: dict) -> tuple[dict, dict | None]:
 
 def evaluate(params: dict, ctx: dict) -> dict:
     t0 = time.perf_counter()
+    if params.get("warmup"):
+        _baseline()  # also caches the baseline, so the next real plan needs one simulation
+        return {"warmup": True, "note": "container warm: WNTR loaded, baseline simulated",
+                "worker_runtime_s": round(time.perf_counter() - t0, 2)}
     throttles, ward_settings = _throttles(params)
     base = _baseline()
     run = engine.run_scenario({"throttles": throttles}) if throttles else base

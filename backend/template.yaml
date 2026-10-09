@@ -14,6 +14,10 @@ Parameters:
       Reserved concurrency per worker Lambda (0 = none). This account's total Lambda
       concurrency limit is 10 and AWS keeps 10 unreserved, so any value > 0 fails
       until a quota increase is granted. The account limit itself caps all workers.
+  AllowedOrigins:
+    Type: CommaDelimitedList
+    Default: "*"
+    Description: CORS origins for the HTTP API (Part E locks this to the Amplify domain).
   RouteMatrixKey:
     Type: String
     Default: precomputed/route_matrix_tuljapur.json
@@ -117,9 +121,9 @@ Resources:
   HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
-      Description: JalNyay public API (CORS * for now; locked to the Amplify URL in Part E)
+      Description: JalNyay public API (CORS limited to AllowedOrigins)
       CorsConfiguration:
-        AllowOrigins: ["*"]
+        AllowOrigins: !Ref AllowedOrigins
         AllowMethods: [GET, POST, OPTIONS]
         AllowHeaders: [content-type]
         MaxAge: 600
@@ -167,7 +171,8 @@ Resources:
       Description: city_evaluate worker (WNTR, EPA Net3 sample network)
       PackageType: Image
       ImageConfig: {Command: [jalnyay_backend.city_worker.handler]}
-      MemorySize: 3008
+      # 1769 MB = one full vCPU; the simulation is single-threaded (no slowdown vs 3008 MB in a CPU-limit test)
+      MemorySize: 1769
       Timeout: 300
       ReservedConcurrentExecutions: !If [HasReservedConcurrency, !Ref WorkerReservedConcurrency, !Ref AWS::NoValue]
       LoggingConfig: {LogGroup: !Ref CityEvaluateLogs}

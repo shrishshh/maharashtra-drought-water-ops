@@ -67,6 +67,8 @@ def validate(job_type: str, params) -> dict:
         raise ValueError("params must be an object")
 
     if job_type == "city_evaluate":
+        if params.get("warmup") is True:  # website page load: start a container, load WNTR, run the baseline
+            return {"warmup": True}
         plan = params.get("plan", "FAIR")
         if plan not in CITY_PLANS:
             raise ValueError(f"plan must be one of {CITY_PLANS}")
@@ -88,6 +90,9 @@ def validate(job_type: str, params) -> dict:
             "solver_time_limit_s": _num(params, "solver_time_limit_s", 20, 1, 60, integer=True),
             "distance_provider": _provider(params),
             "include_naive": _bool(params, "include_naive", True),
+            # publish=true jobs refresh the website's default view (GET /village/plan/latest);
+            # experiments and smoke tests leave it alone
+            "publish": _bool(params, "publish", False),
         }
 
     if job_type == "village_fleet":

@@ -132,3 +132,29 @@ def test_api_errors(monkeypatch):
     assert _call("GET /jobs/{id}", path={"id": "../etc"})["statusCode"] == 400
     assert _call("GET /jobs/{id}", path={"id": "0" * 32})["statusCode"] == 404
     assert _call("DELETE /everything")["statusCode"] == 404
+
+
+# ---------------- Part E additions: publish flag, warm-up
+def test_publish_only_when_requested(monkeypatch):
+    from jalnyay_backend import village_worker
+
+    written = {}
+    monkeypatch.setattr(jobstore, "get_json", lambda key: written.get(key, (_ for _ in ()).throw(KeyError(key))))
+    monkeypatch.setattr(jobstore, "put_json", lambda key, obj: written.__setitem__(key, obj) or 1)
+    base = {"n_tankers": 6, "distance_provider": "haversine", "solver_time_limit_s": 1, "include_naive": False}
+    assert validation.validate("village_plan", base)["publish"] is False
+    village_worker.plan(validation.validate("village_plan", base), {"job_mode": True, "job_id": "x"})
+    assert village_worker.LATEST_KEY not in written  # experiments never touch the default view
+    village_worker.plan(validation.validate("village_plan", {**base, "publish": True,
+                                                             "filling_points": ["Tuljapur", "Naldurg"]}),
+                        {"job_mode": True, "job_id": "y"})
+    doc = written[village_worker.LATEST_KEY]
+    assert list(doc["views"]) == ["Tuljapur+Naldurg"] and doc["views"]["Tuljapur+Naldurg"]["source"] == "job y"
+
+
+def test_city_warmup():
+    from jalnyay_backend import city_worker
+
+    assert validation.validate("city_evaluate", {"warmup": True}) == {"warmup": True}
+    out = city_worker.handler({"type": "city_evaluate", "params": {"warmup": True}}, None)["result"]
+    assert out["warmup"] is True and "metrics" not in out

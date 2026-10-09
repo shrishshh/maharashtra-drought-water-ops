@@ -69,10 +69,28 @@ def plan(params: dict, ctx: dict) -> dict:
         "need": need, "plans": plans, "comparison": engine.compare_plans(list(plans.values()), need["ranked"]),
         "worker_runtime_s": round(time.perf_counter() - t0, 2),
     }
-    if ctx.get("job_mode"):  # most recent completed plan, served by GET /village/plan/latest
-        jobstore.put_json("precomputed/village_plan_latest.json",
-                          {**result, "source": f"job {ctx['job_id']}", "updated_at": jobstore.now_iso()})
+    if ctx.get("job_mode") and params["publish"]:
+        publish_view(result, ctx["job_id"])
     return result
+
+
+LATEST_KEY = "precomputed/village_plan_latest.json"
+
+
+def view_key(fill_points: list[str]) -> str:
+    return "+".join(fill_points)  # "Tuljapur" | "Tuljapur+Naldurg"
+
+
+def publish_view(result: dict, job_id: str) -> None:
+    """Replace one view (per filling-point set) of the website's default document."""
+    try:
+        doc = jobstore.get_json(LATEST_KEY)
+    except Exception:  # first publish
+        doc = {"label": LABEL, "views": {}}
+    doc.setdefault("views", {})[view_key(result["fill_points"])] = {
+        **result, "source": f"job {job_id}", "updated_at": jobstore.now_iso()}
+    doc["updated_at"] = jobstore.now_iso()
+    jobstore.put_json(LATEST_KEY, doc)
 
 
 def fleet(params: dict, ctx: dict) -> dict:
