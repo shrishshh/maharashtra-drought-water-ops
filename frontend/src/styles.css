@@ -56,6 +56,7 @@ main { max-width: 1240px; margin: 0 auto; padding: 0 16px 48px; }
 .spinner { width: 18px; height: 18px; border-radius: 50%; border: 3px solid #c9dbfb; border-top-color: var(--accent); animation: spin 0.9s linear infinite; flex: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .simnote { margin: 0.25rem 0; padding: 6px 10px; background: var(--warn-bg); border-left: 4px solid #eda100; border-radius: 6px; font-size: 0.9rem; }
+.explainer { margin: 0.25rem 0; color: var(--ink-2); font-size: 0.95rem; }
 .note { background: #f1f0eb; padding: 10px 12px; border-radius: 8px; font-size: 0.92rem; }
 
 /* buttons + controls */
@@ -143,12 +144,34 @@ tr.muted-row td { color: var(--ink-3); }
 .cmp-b.good { color: var(--good); }
 .tag { display: block; font-size: 0.72rem; font-weight: 400; color: var(--ink-2); }
 .chart { width: 100%; }
+.cmp-context { color: var(--ink-2); margin: 0 0 10px; }
+.headline-line { font-size: 1.5rem; margin: 4px 0 6px; }
+.map-note { margin: 6px 0 0; }
+.claim-tip { white-space: normal; width: 210px; }
 
 /* fraud claims */
 .claims { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .claim { width: 100%; text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 10px 12px; font: inherit; cursor: pointer; }
 .claim.on { border-color: #c41e3a; box-shadow: 0 0 0 2px #f5c2bd; }
 .reason { display: block; color: var(--bad); font-size: 0.86rem; margin-top: 2px; }
+
+/* how it works */
+.arch-wrap { overflow-x: auto; }
+.arch { width: 100%; min-width: 560px; height: auto; display: block; }
+.arch-box { fill: var(--surface); stroke: #c9c7bd; stroke-width: 1.5; }
+.arch-box.accent { fill: #eef4ff; stroke: #9cbcf5; }
+.arch-box.group { fill: #f6f5f1; stroke: #9cbcf5; stroke-dasharray: 6 4; }
+.arch-box.worker { fill: #ffffff; stroke: #9cbcf5; }
+.arch-title { font-weight: 700; font-size: 15px; fill: var(--ink); }
+.arch-line { font-size: 13px; fill: var(--ink-2); }
+.arch-line.strong { fill: var(--ink); font-weight: 600; }
+.arch-label { font-size: 12px; fill: var(--ink-2); }
+.arch-arrow { fill: none; stroke: var(--accent); stroke-width: 2; }
+.arch-arrow.dashed { stroke: var(--ink-3); stroke-dasharray: 5 4; }
+.arch-head { fill: var(--accent); }
+.steps { padding-left: 20px; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+table.wrap-cells td { white-space: normal; vertical-align: top; }
+.countdown.in-force .cd-part { background: var(--bad); min-width: 110px; }
 
 /* home */
 .hero { padding: 28px 0 8px; }

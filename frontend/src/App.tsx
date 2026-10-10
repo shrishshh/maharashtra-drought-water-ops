@@ -3,11 +3,12 @@ import { Bi, T } from "./i18n";
 import Home from "./pages/Home";
 import City from "./pages/City";
 import VillagePage from "./pages/Village";
+import How from "./pages/How";
 
-type Route = "home" | "city" | "village";
+type Route = "home" | "city" | "village" | "how";
 const routeFromHash = (): Route => {
   const h = window.location.hash.replace(/^#\/?/, "");
-  return h === "city" || h === "village" ? h : "home";
+  return h === "city" || h === "village" || h === "how" ? h : "home";
 };
 
 const AWS_SERVICES = [
@@ -34,9 +35,10 @@ export default function App() {
           <a href="#/" className={route === "home" ? "on" : ""}><Bi t={T.home} /></a>
           <a href="#/city" className={route === "city" ? "on" : ""}><Bi t={T.cityShort} /></a>
           <a href="#/village" className={route === "village" ? "on" : ""}><Bi t={T.villageShort} /></a>
+          <a href="#/how" className={route === "how" ? "on" : ""}><Bi t={T.how} /></a>
         </div>
       </nav>
-      <main>{route === "city" ? <City /> : route === "village" ? <VillagePage /> : <Home />}</main>
+      <main>{route === "city" ? <City /> : route === "village" ? <VillagePage /> : route === "how" ? <How /> : <Home />}</main>
       <footer className="footer">
         <div>
           <h3>Data sources</h3>

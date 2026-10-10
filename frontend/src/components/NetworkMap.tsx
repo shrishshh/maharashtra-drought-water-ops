@@ -96,7 +96,7 @@ export default function NetworkMap({ title, ratios, dryThreshold = 0.5, wardFill
           <span>0%</span>
           <span className="gradient" style={{ background: `linear-gradient(90deg, ${RDYLGN.join(",")})` }} />
           <span>100% of demand served</span>
-          <span className="legend-x">✕ dry (&lt;{Math.round(dryThreshold * 100)}%)</span>
+          <span className="legend-x">✕ area runs dry (&lt;{Math.round(dryThreshold * 100)}%)</span>
           <span className="legend-src">■ source / tank</span>
         </div>
       )}

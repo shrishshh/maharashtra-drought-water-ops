@@ -29,7 +29,7 @@ function FitTo({ bounds }: { bounds: L.LatLngBounds }) {
   useEffect(() => {
     const t = setTimeout(() => {
       map.invalidateSize(); // the container may have been laid out after Leaflet measured it
-      map.fitBounds(bounds, { padding: [24, 24] });
+      map.fitBounds(bounds, { padding: [56, 56] });
     }, 60);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +85,7 @@ export default function VillageMap({ villages, fillPoints, plan, trace }: {
               pathOptions={v.eligible
                 ? { color: "#3b2a1a", weight: 1, fillColor: needColor(v.need_score / maxScore), fillOpacity: 0.9 }
                 : { color: "#8a8985", weight: 1.5, fillOpacity: 0, dashArray: "3 3" }}>
-              <Popup>
+              <Popup autoPanPadding={[24, 64]} maxWidth={260}>
                 <b>{v.name}</b> {v.name_mr && <span lang="mr">({v.name_mr})</span>}<br />
                 Population {fmtInt(v.population)} (Census 2011)<br />
                 {v.eligible ? <>Need {fmtInt(v.daily_need_l / 1000)} kL/day · rank {v.rank}<br />Today: <b>{fmtInt(got / 1000)} kL</b> delivered</> : <>Not tanker-eligible (own source not dry)</>}<br />
@@ -108,7 +108,7 @@ export default function VillageMap({ villages, fillPoints, plan, trace }: {
             {trace.points.map((p, i) => <CircleMarker key={i} center={p} radius={2.5} pathOptions={{ color: "#1f2937", weight: 1, fillOpacity: 1 }} />)}
             <Circle center={[trace.claimed.lat, trace.claimed.lon]} radius={trace.radiusM} pathOptions={{ color: "#c41e3a", dashArray: "6 4", fillOpacity: 0.05 }} />
             <Marker position={[trace.claimed.lat, trace.claimed.lon]} icon={L.divIcon({ className: "claim-icon", html: "<span>✚</span>", iconSize: [22, 22], iconAnchor: [11, 11] })}>
-              <Tooltip permanent direction="top" offset={[0, -10]}>{trace.label}</Tooltip>
+              <Tooltip permanent direction="auto" offset={[12, 0]} className="claim-tip">{trace.label}</Tooltip>
             </Marker>
           </>
         )}

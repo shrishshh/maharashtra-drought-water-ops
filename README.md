@@ -1,7 +1,21 @@
-# maharashtra-drought-water-ops
+# JalNyay (जलन्याय): fair water in drought
 
-Water operations toolkit for Maharashtra's drought response (WeMakeDevs x AWS "Environmental Hacks", Oct 2026, Heat and Water track).
-See [CLAUDE.md](CLAUDE.md) for project scope and rules.
+**Live site: https://main.dwnal659uai38.amplifyapp.com**
+
+265 of Maharashtra's 358 talukas are in drought, and a mandatory 10% water cut starts on
+16 October 2026. JalNyay helps officials share that shortage fairly. For cities, it
+simulates the water network and finds per-ward valve settings that save the same 10% as
+a blunt cut while no area runs dry (0 instead of 3 on a sample network). For villages, it
+ranks drought-hit villages by need and plans tanker routes on real roads: with the same
+6 tankers in Tuljapur taluka (Dharashiv), first come, first served leaves 4 of 5 high-need
+villages dry and JalNyay leaves none. It also flags suspicious tanker trips by comparing GPS
+traces with claimed deliveries. Everything runs serverless on AWS (Lambda, API Gateway,
+DynamoDB, S3, Amazon Location Service, Amplify Hosting). The city network, wards, leaks,
+livestock, tanker history and GPS data are simulated; village locations (OpenStreetMap) and
+population (Census 2011) are real.
+
+Built for WeMakeDevs x AWS "Environmental Hacks", Oct 2026 (Heat and Water track).
+See [CLAUDE.md](CLAUDE.md) for project scope and rules, and the "How it works" page on the site.
 
 ## Setup (local)
 
@@ -132,7 +146,9 @@ Live: **https://main.dwnal659uai38.amplifyapp.com** (React + Vite + TypeScript, 
 | Home | headline numbers read from the API | countdown to 16 Oct 2026, source links |
 | City | BLUNT / FAIR results from `GET /city/scenarios`; **"Try your own plan"** runs `city_evaluate` on Lambda | Net3 geometry + ward outlines bundled (`frontend/src/data/net3.json`) |
 | Village | villages from DynamoDB; default plans from `GET /village/plan/latest`; **any other tanker count** runs `village_plan` on Lambda | simulated fraud demo (GPS traces + claims) bundled (`village_static.json`) |
+| How it works | - | architecture diagram, AWS services, method, limitations (static page) |
 
+- The fraud panel's "Re-run fraud check on AWS" sends the bundled claims + GPS to `village_fraud` live.
 - Jobs are polled every 4 s with a per-type maximum wait; the City page sends one
   `city_evaluate {warmup: true}` on load so the first real plan avoids the cold start.
 - The default village view only changes for `village_plan` jobs with `publish=true`
@@ -152,4 +168,5 @@ website: `aws amplify delete-app --app-id dwnal659uai38 --region ap-south-1`.
 
 ## AI tools used
 
-- Claude Code (Anthropic) - code generation, debugging, and documentation.
+- **Claude Code** (Anthropic): code generation, debugging, data research, testing,
+  AWS infrastructure (SAM) and documentation. All code was written during the event.

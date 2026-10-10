@@ -19,11 +19,11 @@ function MetricRow({ m, vs }: { m: CityMetrics; vs?: CityMetrics }) {
   return (
     <div className="metrics">
       <Metric label="water saved" value={`${m.reduction_pct.toFixed(1)}%`} sub="target 9.5-10.5%" />
-      <Metric label="dry junctions (<50%)" value={m.dry_count} tone={m.dry_count ? "bad" : "good"}
+      <Metric label="areas run dry (<50% of their water)" value={m.dry_count} tone={m.dry_count ? "bad" : "good"}
         sub={dDry !== undefined && dDry !== 0 ? `${dDry > 0 ? "+" : ""}${dDry} vs blunt` : undefined} />
-      <Metric label="under-served (<80%)" value={m.underserved_count}
+      <Metric label="areas under-served (<80%)" value={m.underserved_count}
         sub={dUnder !== undefined && dUnder !== 0 ? `${dUnder > 0 ? "+" : ""}${dUnder} vs blunt` : undefined} />
-      <Metric label="worst-off junction gets" value={pct(m.min_ratio)} tone={m.min_ratio < 0.5 ? "bad" : undefined} />
+      <Metric label="worst-off area gets" value={pct(m.min_ratio)} tone={m.min_ratio < 0.5 ? "bad" : undefined} />
       <Metric label="average (demand-weighted)" value={pct(m.weighted_mean_ratio, 1)} />
     </div>
   );
@@ -83,8 +83,9 @@ export default function City() {
         <Bi t={T.city} as="h1" />
         <p className="lead">
           Same 10% saving, different fairness. A <b>blunt</b> cut throttles both source mains equally; the <b>fair</b> plan
-          sets each ward's inlet valve separately so no junction runs dry.
+          sets each ward's inlet valve separately so no area runs dry.
         </p>
+        <p className="explainer">Each point is a junction: a neighbourhood's connection to the pipe network.</p>
         <SimNote>{LABEL}. 7-day pressure-driven simulation (WNTR), last 24 h scored.</SimNote>
       </header>
 
