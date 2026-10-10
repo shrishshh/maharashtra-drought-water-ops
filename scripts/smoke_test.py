@@ -22,15 +22,18 @@ PART_C = json.loads((REPO / "outputs" / "partC_results.json").read_text(encoding
 RESULTS: list = []
 
 
-def http(method, url, body=None):
+def http(method, url, body=None, headers=None):
     data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(url, data=data, method=method, headers={"content-type": "application/json"})
+    req = urllib.request.Request(url, data=data, method=method,
+                                 headers={"content-type": "application/json", **(headers or {})})
     t0 = time.perf_counter()
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
             status, text = r.status, r.read().decode()
+            http.last_headers = dict(r.headers)
     except urllib.error.HTTPError as e:
         status, text = e.code, e.read().decode()
+        http.last_headers = dict(e.headers)
     return status, (json.loads(text) if text else None), time.perf_counter() - t0
 
 
@@ -70,6 +73,7 @@ def main():
     ap.add_argument("--api", help="API base URL (default: backend/deploy_outputs.json)")
     ap.add_argument("--with-fleet", action="store_true", help="also run the full fleet sweep (~4-5 min)")
     ap.add_argument("--no-repeat", action="store_true", help="run each job once (skip warm-start timing)")
+    ap.add_argument("--origin", help="website origin that CORS must allow (others must be refused)")
     args = ap.parse_args()
     api = (args.api or json.loads((REPO / "backend" / "deploy_outputs.json").read_text())["ApiUrl"]).rstrip("/")
     repeat, timings = not args.no_repeat, []
@@ -86,7 +90,27 @@ def main():
     check("GET /village/villages", status == 200 and vil["count"] == 32 and vil["villages"][0]["rank"] == 1,
           f"{vil.get('count')} villages, {dt:.2f} s")
     status, latest, dt = http("GET", f"{api}/village/plan/latest")
-    check("GET /village/plan/latest", status == 200 and len(latest["comparison"]) >= 2, f"{dt:.2f} s")
+    views = latest.get("views", {}) if status == 200 else {}
+    check("GET /village/plan/latest", status == 200 and {"Tuljapur", "Tuljapur+Naldurg"} <= set(views), f"{dt:.2f} s")
+    latest_stamp = {k: v.get("updated_at") for k, v in views.items()}
+    for key, (litres, served) in {"Tuljapur": (230_000, 12), "Tuljapur+Naldurg": (300_000, 14)}.items():
+        opt = views[key]["comparison"][-1] if key in views else {}
+        check(f"  default view {key}: road-based {litres // 1000} kL / {served} villages",
+              (opt.get("litres_delivered"), opt.get("villages_served")) == (litres, served),
+              f"{opt.get('litres_delivered')} L, {opt.get('villages_served')} villages")
+    fl = latest.get("fleet", {})
+    check("  fleet thresholds 2 / 22 tankers", (fl.get("min_tankers_every_high_need_one_load"),
+                                                fl.get("min_tankers_full_human_need")) == (2, 22))
+
+    if args.origin:
+        print()
+        print("CORS (browser access)")
+        for origin, allowed in ((args.origin, True), ("https://evil.example.com", False)):
+            st, _, _ = http("OPTIONS", f"{api}/jobs", headers={"Origin": origin, "Access-Control-Request-Method": "POST",
+                                                               "Access-Control-Request-Headers": "content-type"})
+            acao = {k.lower(): v for k, v in getattr(http, "last_headers", {}).items()}.get("access-control-allow-origin")
+            check(f"preflight from {origin} {'allowed' if allowed else 'refused'}",
+                  (acao == origin) if allowed else (acao is None), f"HTTP {st}, allow-origin={acao}")
 
     print("\nValidation")
     check("POST /jobs bad type -> 400", http("POST", f"{api}/jobs", {"type": "nope"})[0] == 400)
@@ -153,6 +177,10 @@ def main():
         check("fleet (6, 10 tankers) coverage within 2 points of local",
               all(abs(by_n[n]["need_covered_pct"] - local[n]["need_covered_pct"]) <= 2 for n in (6, 10)),
               ", ".join(f"{n}: {by_n[n]['need_covered_pct']}%" for n in (6, 10)))
+
+    status, after, _ = http("GET", f"{api}/village/plan/latest")
+    check("default view untouched by these (unpublished) jobs",
+          {k: v.get("updated_at") for k, v in after.get("views", {}).items()} == latest_stamp)
 
     print("\nWorker timings (runtime_s = inside the worker; wall_s = submit -> done, incl. polling every 2 s)")
     for t in timings:

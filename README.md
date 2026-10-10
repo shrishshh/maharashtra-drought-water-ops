@@ -123,6 +123,33 @@ cd backend; sam delete --stack-name jalnyay --region ap-south-1
 `sam delete` also offers to delete the ECR image repositories and the SAM
 artifacts bucket (`aws-sam-cli-managed-default` stack).
 
+## Part E - Website (AWS Amplify Hosting)
+
+Live: **https://main.dwnal659uai38.amplifyapp.com** (React + Vite + TypeScript, react-leaflet, recharts; `frontend/`).
+
+| Screen | What is live (API / AWS Lambda) | What is precomputed |
+|---|---|---|
+| Home | headline numbers read from the API | countdown to 16 Oct 2026, source links |
+| City | BLUNT / FAIR results from `GET /city/scenarios`; **"Try your own plan"** runs `city_evaluate` on Lambda | Net3 geometry + ward outlines bundled (`frontend/src/data/net3.json`) |
+| Village | villages from DynamoDB; default plans from `GET /village/plan/latest`; **any other tanker count** runs `village_plan` on Lambda | simulated fraud demo (GPS traces + claims) bundled (`village_static.json`) |
+
+- Jobs are polled every 4 s with a per-type maximum wait; the City page sends one
+  `city_evaluate {warmup: true}` on load so the first real plan avoids the cold start.
+- The default village view only changes for `village_plan` jobs with `publish=true`
+  (refresh it with `scripts/seed.py`); website experiments never overwrite it.
+- API CORS is locked to the Amplify origin (`AllowedOrigins` in `backend/samconfig.toml`).
+
+```powershell
+.\.venv\Scripts\python.exe scripts\export_frontend_data.py   # bundled geometry + fraud demo
+cd frontend; npm install; $env:VITE_API_URL="<ApiUrl>"; npm run dev   # local dev (needs CORS to allow localhost)
+cd ..; .\.venv\Scripts\python.exe scripts\deploy_frontend.py  # build + manual zip deploy to Amplify
+.\.venv\Scripts\python.exe scripts\smoke_test.py --origin https://main.dwnal659uai38.amplifyapp.com
+.\.venv\Scripts\python.exe scripts\screenshots.py --url https://main.dwnal659uai38.amplifyapp.com/ --run-jobs
+```
+
+Screenshots of every screen (laptop + phone): `outputs/screens/`. Teardown of the
+website: `aws amplify delete-app --app-id dwnal659uai38 --region ap-south-1`.
+
 ## AI tools used
 
 - Claude Code (Anthropic) - code generation, debugging, and documentation.
