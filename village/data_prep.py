@@ -7,7 +7,9 @@ REAL data:
   - Population: Census 2011 village totals for Tuljapur taluka (Census
     sub-district 04241), as tabulated by census2011.co.in (a secondary
     reproduction of the Census 2011 PCA; the official PCA xlsx could not be
-    downloaded). Raw page: data/village/census2011_tuljapur_raw.html
+    downloaded). Only the extracted table is kept:
+    data/village/census2011_tuljapur_villages.csv (code, name, population);
+    see data/village/README.md for the source note.
     Joined to OSM by fuzzy name match (match rate printed + saved).
   - Filling points: Tuljapur town (taluka HQ, tanker base) and, optionally,
     Naldurg town, both from OSM. ASSUMPTION: plausible tanker filling points,
@@ -20,6 +22,7 @@ Run from repo root:  .venv\\Scripts\\python.exe -m village.data_prep [--refresh]
 """
 
 import argparse
+import csv
 import datetime as dt
 import difflib
 import json
@@ -34,7 +37,7 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 DATA = REPO / "data" / "village"
 OSM_RAW = DATA / "osm_tuljapur_raw.json"
-CENSUS_RAW = DATA / "census2011_tuljapur_raw.html"
+CENSUS_CSV = DATA / "census2011_tuljapur_villages.csv"
 OUT = DATA / "villages.json"
 
 TALUKA_REL_ID = 10349973  # OSM relation: Tuljapur taluka (admin_level 6), Dharashiv district
@@ -71,9 +74,28 @@ def fetch(refresh: bool) -> None:
                 print(f"{url} failed: {exc}")
         else:
             sys.exit("All Overpass mirrors failed")
-    if refresh or not CENSUS_RAW.exists():
+    if refresh or not CENSUS_CSV.exists():
         req = urllib.request.Request(CENSUS_URL, headers={"User-Agent": USER_AGENT})
-        CENSUS_RAW.write_bytes(urllib.request.urlopen(req, timeout=60).read())
+        html = urllib.request.urlopen(req, timeout=60).read().decode("utf-8", errors="replace")
+        write_census_csv(parse_census_html(html))  # keep only the extracted table, not the page
+
+
+def parse_census_html(html: str) -> list[dict]:
+    """Village rows (Census 2011 location code, name, population) from the census2011.co.in table."""
+    rows = re.findall(r'href="/data/village/(\d+)-[^"]*">([^<]+)</a></td>\s*<td>[^<]*</td>\s*<td>([\d,]+)</td>', html)
+    return [{"code": c, "name": n.strip(), "population": int(p.replace(",", ""))} for c, n, p in rows]
+
+
+def write_census_csv(rows: list[dict]) -> None:
+    with CENSUS_CSV.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["code", "name", "population"])
+        w.writeheader()
+        w.writerows(rows)
+
+
+def read_census_csv() -> list[dict]:
+    with CENSUS_CSV.open(newline="", encoding="utf-8") as f:
+        return [{"code": r["code"], "name": r["name"], "population": int(r["population"])} for r in csv.DictReader(f)]
 
 
 def norm(name: str) -> str:
@@ -88,16 +110,14 @@ def norm(name: str) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--refresh", action="store_true", help="re-download OSM and Census pages")
+    ap.add_argument("--refresh", action="store_true", help="re-download OSM data and the Census table")
     fetch(ap.parse_args().refresh)
 
     elements = json.loads(OSM_RAW.read_text(encoding="utf-8"))["elements"]
     osm = [e for e in elements if e["tags"].get("place") == "village" and e["tags"].get("name")]
     towns = {e["tags"]["name"]: e for e in elements if e["tags"].get("place") == "town"}
 
-    html = CENSUS_RAW.read_text(encoding="utf-8", errors="replace")
-    rows = re.findall(r'href="/data/village/(\d+)-[^"]*">([^<]+)</a></td>\s*<td>[^<]*</td>\s*<td>([\d,]+)</td>', html)
-    census = [{"code": c, "name": n.strip(), "population": int(p.replace(",", ""))} for c, n, p in rows]
+    census = read_census_csv()
 
     # One-to-one greedy fuzzy match on normalised names.
     scored = sorted(((difflib.SequenceMatcher(None, norm(o["tags"]["name"]), norm(c["name"])).ratio(), i, j)
